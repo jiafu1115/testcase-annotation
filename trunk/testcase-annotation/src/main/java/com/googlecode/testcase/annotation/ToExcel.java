@@ -39,7 +39,7 @@ public class ToExcel {
 		HSSFRow row = sheet.createRow(0);
 		HSSFCell cell = row.createCell(0);
 
-		cell.setCellValue("hello world");
+		cell.setCellValue("hello \nworldhellow world");
 
 		row = sheet.createRow(1);
 
