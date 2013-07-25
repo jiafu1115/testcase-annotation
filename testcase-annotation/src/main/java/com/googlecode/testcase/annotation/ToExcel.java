@@ -41,6 +41,9 @@ public class ToExcel {
 
 		cell.setCellValue("hello \nworldhellow world");
 
+		HSSFCell createCell = row.createCell(1);
+		createCell.setCellValue("step1: do one step\n step2: do step2");
+
 		row = sheet.createRow(1);
 
 		cell = row.createCell(0);
