@@ -1,6 +1,5 @@
 package com.googlecode.testcase.annotation;
 
-
 import org.junit.Test;
 
 public class JunitExample {
