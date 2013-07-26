@@ -12,6 +12,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.googlecode.testcase.annotation.TestCaseWrapper.TestCaseWrapperElement;
+
 public class ToExcelHandle {
 
 	private static final String SHEET_NAME = "Test Cases";
@@ -40,7 +42,7 @@ public class ToExcelHandle {
 		HSSFSheet sheet = workbook.createSheet(SHEET_NAME);
 		HSSFRow caseElementRow = sheet.createRow(ROW_NUMBER++);
 
-		List<CaseElementWrapper> caseElements = CaseElementWrapper.toListAsSequence();
+		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement.toListAsSequence();
 		int size = caseElements.size();
 		for (int i = 0; i < size; i++) {
 			caseElementRow.createCell(i).setCellValue(caseElements.get(i).toString());
@@ -51,11 +53,11 @@ public class ToExcelHandle {
 		HSSFSheet sheetForTestCase = workbook.getSheetAt(0);
 		HSSFRow caseRow = sheetForTestCase.createRow(ROW_NUMBER++);
 
- 		TestCaseWrapperStringFormatter testCaseStringFormatter = new TestCaseWrapperStringFormatter(testCaseWrapper);
-		List<CaseElementWrapper> caseElements = CaseElementWrapper.toListAsSequence();
+ 		TestCaseWrapperStringFormatter testCaseWrapperStringFormatter = new TestCaseWrapperStringFormatter(testCaseWrapper);
+		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement.toListAsSequence();
 		int size = caseElements.size();
 		for (int i = 0; i < size; i++) {
-			String caseColumnValue = testCaseStringFormatter.format(caseElements.get(i));
+			String caseColumnValue = testCaseWrapperStringFormatter.format(caseElements.get(i));
 			HSSFCell caseColumn = caseRow.createCell(i);
 			caseColumn.setCellValue(caseColumnValue);
 		}

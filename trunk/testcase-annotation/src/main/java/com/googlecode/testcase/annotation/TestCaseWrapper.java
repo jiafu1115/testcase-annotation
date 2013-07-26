@@ -1,6 +1,22 @@
 package com.googlecode.testcase.annotation;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TestCaseWrapper {
+
+	public static enum TestCaseWrapperElement {
+
+		ID, TITLE, PRECONDITIONS, STEPS, RESULTS, METHOD;
+
+		public String toString() {
+			return super.toString().toLowerCase();
+		}
+
+		public static List<TestCaseWrapperElement> toListAsSequence() {
+			return Arrays.asList(TestCaseWrapperElement.values());
+		}
+	}
 
 	private TestCase testCase;
 	/**

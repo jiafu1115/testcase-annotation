@@ -1,14 +1,16 @@
 package com.googlecode.testcase.annotation;
 
+import com.googlecode.testcase.annotation.TestCaseWrapper.TestCaseWrapperElement;
+
 public abstract class TestCaseWrapperFormatter {
 
 	protected TestCaseWrapper testCaseWrapper;
 
-	protected TestCaseWrapperFormatter(TestCaseWrapper testCase) {
+	protected TestCaseWrapperFormatter(TestCaseWrapper testCaseWrapper) {
 		super();
-		this.testCaseWrapper = testCase;
+		this.testCaseWrapper = testCaseWrapper;
 	}
 
-	public abstract String format(CaseElementWrapper caseElementWrapper);
+	public abstract String format(TestCaseWrapperElement testCaseWrapperElement);
 
 }
