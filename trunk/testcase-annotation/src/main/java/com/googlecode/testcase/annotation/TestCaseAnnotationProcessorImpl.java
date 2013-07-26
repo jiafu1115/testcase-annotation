@@ -2,6 +2,8 @@ package com.googlecode.testcase.annotation;
 
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
 import com.sun.mirror.apt.AnnotationProcessor;
 import com.sun.mirror.apt.AnnotationProcessorEnvironment;
 import com.sun.mirror.declaration.AnnotationMirror;
@@ -9,6 +11,8 @@ import com.sun.mirror.declaration.MethodDeclaration;
 import com.sun.mirror.declaration.TypeDeclaration;
 
 class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
+
+	private final static Logger LOGGER=Logger.getLogger(TestCaseAnnotationProcessorImpl.class);
 	private final AnnotationProcessorEnvironment annotationProcessorEnvironment;
 
 	TestCaseAnnotationProcessorImpl(AnnotationProcessorEnvironment annotationProcessorEnvironment) {
@@ -30,8 +34,9 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 				if (testCase == null)
 					continue;
 
-				toExcelHandle.add(new TestCaseWrapper(testCase, methodDeclaration.getSimpleName()));
-				System.out.println(testCase.results()[0]);
+				TestCaseWrapper testCaseWrapper = new TestCaseWrapper(testCase, methodDeclaration.getSimpleName());
+				LOGGER.info(testCaseWrapper);
+				toExcelHandle.add(testCaseWrapper);
 			}
 		}
 
