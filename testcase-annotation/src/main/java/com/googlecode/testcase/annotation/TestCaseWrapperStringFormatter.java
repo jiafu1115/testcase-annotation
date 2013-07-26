@@ -1,5 +1,7 @@
 package com.googlecode.testcase.annotation;
 
+import com.googlecode.testcase.annotation.TestCaseWrapper.TestCaseWrapperElement;
+
 public class TestCaseWrapperStringFormatter extends TestCaseWrapperFormatter {
 
 	public TestCaseWrapperStringFormatter(TestCaseWrapper testCaseWrapper) {
@@ -13,9 +15,9 @@ public class TestCaseWrapperStringFormatter extends TestCaseWrapperFormatter {
 	 * com.googlecode.testcase.annotation.TestCaseWrapperFormatter#format(com.googlecode
 	 * .testcase.annotation.CaseElement)
 	 */
-	public String format(CaseElementWrapper caseElementWrapper) {
+	public String format(TestCaseWrapperElement testCaseWrapperElement) {
 		TestCase testCase = testCaseWrapper.getTestCase();
-  		switch (caseElementWrapper) {
+  		switch (testCaseWrapperElement) {
 		case ID:
 			return String.valueOf(testCase.id());
 		case TITLE:
