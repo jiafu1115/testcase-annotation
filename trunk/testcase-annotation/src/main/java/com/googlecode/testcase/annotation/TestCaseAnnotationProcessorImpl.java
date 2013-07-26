@@ -16,24 +16,26 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 	}
 
 	public void process() {
- 		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment.getSpecifiedTypeDeclarations()){
- 			System.out.println("find:"+typeDeclaration);
+		ToExcelHandle toExcelHandle = new ToExcelHandle();
 
- 			Collection<? extends MethodDeclaration> methods = typeDeclaration.getMethods();
- 			for(MethodDeclaration methodDeclaration: methods){
+		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment.getSpecifiedTypeDeclarations()) {
+			System.out.println("find:" + typeDeclaration);
 
- 				System.out.println("___"+methodDeclaration);
+			Collection<? extends MethodDeclaration> methods = typeDeclaration.getMethods();
+			for (MethodDeclaration methodDeclaration : methods) {
 
- 				TestCase annotation = methodDeclaration.getAnnotation(TestCase.class);
- 				if(annotation==null)
- 					continue;
- 				System.out.println(annotation.results()[0]);
+				System.out.println("___" + methodDeclaration);
 
- 			}
+				TestCase testCase = methodDeclaration.getAnnotation(TestCase.class);
+				if (testCase == null)
+					continue;
 
+				toExcelHandle.add(new TestCaseWrapper(testCase, methodDeclaration.getSimpleName()));
+				System.out.println(testCase.results()[0]);
+			}
+		}
 
- 	}
+		toExcelHandle.generate();
 	}
-
 
 }
