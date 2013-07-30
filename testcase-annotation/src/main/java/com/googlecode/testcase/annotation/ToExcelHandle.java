@@ -35,7 +35,7 @@ public class ToExcelHandle {
 	private static String generateExcelPath(){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		String date= simpleDateFormat.format(new Date());
-		return date+".xsl";
+		return date+".xls";
 	}
 
 	public void initialWorkbook() {
