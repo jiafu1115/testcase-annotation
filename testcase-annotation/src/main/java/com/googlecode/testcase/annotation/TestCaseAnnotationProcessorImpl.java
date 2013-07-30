@@ -15,6 +15,7 @@ import com.sun.mirror.declaration.TypeDeclaration;
 
 class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
+	private static final String XLS_EXTENSION = ".xls";
 	private final static Logger LOGGER=Logger.getLogger(TestCaseAnnotationProcessorImpl.class);
 	private final AnnotationProcessorEnvironment annotationProcessorEnvironment;
 
@@ -26,7 +27,7 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		String date= simpleDateFormat.format(new Date());
 
-		return date+".xls";
+ 		return "TestCaes_"+date+XLS_EXTENSION;
 	}
 
 	public void process() {
