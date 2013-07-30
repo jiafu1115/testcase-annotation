@@ -2,7 +2,7 @@
 		<dependency>
 			<groupId>com.googlecode.testcase-annotation</groupId>
 			<artifactId>testcase-annotation</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.8</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -16,14 +16,10 @@
 				<version>1.0-alpha-5</version>
 				<configuration>
  					<factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>
+					<options>
+						<option>fileName=TestCase.xls</option>
+					</options>
 				</configuration>
-			<!-- 	<dependencies>
-					<dependency>
-						<groupId>com.googlecode.testcase-annotation</groupId>
-						<artifactId>testcase-annotation</artifactId>
-						<version>1.0.0</version>
-					</dependency>
-				</dependencies> -->
- 			</plugin>
+			</plugin>
 		</plugins>
- 	</build>
+	</build>

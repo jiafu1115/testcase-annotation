@@ -1,7 +1,5 @@
 package com.googlecode.testcase.annotation;
 
-import static java.util.Collections.emptySet;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,23 +12,20 @@ import com.sun.mirror.declaration.AnnotationTypeDeclaration;
 
 /**
  * cd C:\testcase-annotation\src\main\java\com\googlecode\testcase\annotation
-set CLASSPATH=C:\testcase-annotation\target\classes
-apt -nocompile -factory com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl  ./*.java
-
+ * set CLASSPATH=C:\testcase-annotation\target\classes apt -nocompile -factory
+ * com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl ./*.java
+ *
  * @author jiafu
  *
  */
 public class AnnotationProcessFactoryImpl implements AnnotationProcessorFactory {
 
 	public Collection<String> supportedOptions() {
-		return Arrays.asList("Apath","apath","path");
- 	}
+		return Collections.emptyList();
+	}
 
 	public Collection<String> supportedAnnotationTypes() {
-/*		return Collections
-				.singleton("com.googlecode.testcase.annotation.TestCase");*/
-
-		return  Collections.unmodifiableCollection(Arrays.asList("*"));
+		return Collections.unmodifiableCollection(Arrays.asList("*"));
 	}
 
 	public AnnotationProcessor getProcessorFor(

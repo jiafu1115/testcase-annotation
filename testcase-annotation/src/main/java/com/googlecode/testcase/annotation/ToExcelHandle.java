@@ -1,10 +1,8 @@
 package com.googlecode.testcase.annotation;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -18,27 +16,20 @@ public class ToExcelHandle {
 
 	private static final String SHEET_NAME = "Test Cases";
 	private static int ROW_NUMBER = 0;
-	private String excelPath;
-	private HSSFWorkbook workbook;
 
-	public ToExcelHandle(String excelPath) {
+	private HSSFWorkbook workbook;
+	private String folder;
+	private String file;
+
+	public ToExcelHandle(String folder,String file) {
 		super();
-		this.excelPath = excelPath;
-		this.workbook = new HSSFWorkbook();
+		this.folder=folder;
+		this.file=file;
+ 		this.workbook = new HSSFWorkbook();
 		initialWorkbook();
 	}
 
-	public ToExcelHandle() {
- 		this(generateExcelPath());
-	}
-
-	private static String generateExcelPath(){
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		String date= simpleDateFormat.format(new Date());
-		return date+".xls";
-	}
-
-	public void initialWorkbook() {
+ 	public void initialWorkbook() {
 		HSSFSheet sheet = workbook.createSheet(SHEET_NAME);
 		HSSFRow caseElementRow = sheet.createRow(ROW_NUMBER++);
 
@@ -66,7 +57,11 @@ public class ToExcelHandle {
 	public void generate() {
 		FileOutputStream os = null;
 		try {
-			os = new FileOutputStream(excelPath);
+			File file=new File(folder);
+			if(!file.exists())
+				file.mkdirs();
+
+			os = new FileOutputStream(folder+"\\"+this.file);
 			workbook.write(os);
 			os.close();
 		} catch (IOException e) {
@@ -78,6 +73,12 @@ public class ToExcelHandle {
 				} catch (IOException e) {
 				}
 		}
+	}
+
+	public static void main(String args[]){
+		File file=new File("C:\\com.googlecode\\target\\generated-sources\\apt\\");
+		System.out.println(file.exists());
+		file.mkdirs();
 	}
 
 }
