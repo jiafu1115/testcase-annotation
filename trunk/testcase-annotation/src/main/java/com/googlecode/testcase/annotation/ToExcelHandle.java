@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -13,6 +14,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import com.googlecode.testcase.annotation.TestCaseWrapper.TestCaseWrapperElement;
 
 public class ToExcelHandle {
+
+	private static final Logger LOGGER=Logger.getLogger(ToExcelHandle.class);
 
 	private static final String SHEET_NAME = "Test Cases";
 	private static int ROW_NUMBER = 0;
@@ -61,7 +64,9 @@ public class ToExcelHandle {
 			if(!file.exists())
 				file.mkdirs();
 
-			os = new FileOutputStream(folder+"\\"+this.file);
+			String outputFullPath = folder+"\\"+this.file;
+			os = new FileOutputStream(outputFullPath);
+			LOGGER.info("output excel file path:"+outputFullPath);
 			workbook.write(os);
 			os.close();
 		} catch (IOException e) {
