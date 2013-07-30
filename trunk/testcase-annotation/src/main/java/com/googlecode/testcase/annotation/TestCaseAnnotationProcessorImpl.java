@@ -1,7 +1,10 @@
 package com.googlecode.testcase.annotation;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +22,13 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 		this.annotationProcessorEnvironment = annotationProcessorEnvironment;
 	}
 
+	private static String generateExcelPath(){
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		String date= simpleDateFormat.format(new Date());
+
+		return date+".xls";
+	}
+
 	public void process() {
 
 /*		{-Apath=c:/test=null,
@@ -32,11 +42,16 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 				-factory=com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl,
 				-sourcepath=C:\com.googlecode\src\main\java}*/
 
-
+		String fileName=generateExcelPath();
 		Map<String, String> options = this.annotationProcessorEnvironment.getOptions();
-		System.err.println(options);
+		Set<String> keySet = options.keySet();
+		for(String key:keySet){
+			if(key.startsWith("-AfileName="))
+				fileName=key.substring("-AfileName=".length());
+ 		};
 
-		ToExcelHandle toExcelHandle = new ToExcelHandle();
+ 		String folderPath = options.get("-s");
+		ToExcelHandle toExcelHandle = new ToExcelHandle(folderPath,fileName);
 
 		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment.getSpecifiedTypeDeclarations()) {
 			System.out.println("find:" + typeDeclaration);
