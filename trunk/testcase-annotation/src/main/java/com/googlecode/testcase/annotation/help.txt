@@ -1,0 +1,29 @@
+	<dependencies>
+		<dependency>
+			<groupId>com.googlecode.testcase-annotation</groupId>
+			<artifactId>testcase-annotation</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.0-alpha-5</version>
+				<configuration>
+ 					<factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>
+				</configuration>
+			<!-- 	<dependencies>
+					<dependency>
+						<groupId>com.googlecode.testcase-annotation</groupId>
+						<artifactId>testcase-annotation</artifactId>
+						<version>1.0.0</version>
+					</dependency>
+				</dependencies> -->
+ 			</plugin>
+		</plugins>
+ 	</build>

@@ -22,11 +22,9 @@ apt -nocompile -factory com.googlecode.testcase.annotation.AnnotationProcessFact
  */
 public class AnnotationProcessFactoryImpl implements AnnotationProcessorFactory {
 
-	private static final Collection<String> supportedOptions = emptySet();
-
 	public Collection<String> supportedOptions() {
-		return supportedOptions;
-	}
+		return Arrays.asList("Apath","apath","path");
+ 	}
 
 	public Collection<String> supportedAnnotationTypes() {
 /*		return Collections
