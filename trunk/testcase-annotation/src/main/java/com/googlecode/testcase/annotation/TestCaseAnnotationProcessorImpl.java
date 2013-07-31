@@ -8,7 +8,10 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.googlecode.testcase.annotation.handle.toexcel.strategy.ToXslExcelStrategy;
+import com.googlecode.testcase.annotation.handle.toexcel.ExcelType;
+import com.googlecode.testcase.annotation.handle.toexcel.strategy.ToExcelStrategy;
+import com.googlecode.testcase.annotation.handle.toexcel.strategy.ToXlsxExcelStrategy;
+import com.googlecode.testcase.annotation.handle.toexcel.strategy.ToXlsExcelStrategy;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper;
 import com.sun.mirror.apt.AnnotationProcessor;
 import com.sun.mirror.apt.AnnotationProcessorEnvironment;
@@ -17,47 +20,56 @@ import com.sun.mirror.declaration.TypeDeclaration;
 
 class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
-	private static final  Logger LOGGER=Logger.getLogger(TestCaseAnnotationProcessorImpl.class);
- 	private static final String XLS_EXTENSION = ".xls";
+	public static final String DEFAULT_EXCEL_NAME_FORMAT = "TestCase_%s%s";
+	public static final ExcelType DEFAULT_EXCEL_TYPE = ExcelType.XLS;
+
+	private static final Logger LOGGER = Logger
+			.getLogger(TestCaseAnnotationProcessorImpl.class);
 
 	private final AnnotationProcessorEnvironment annotationProcessorEnvironment;
 
-	TestCaseAnnotationProcessorImpl(AnnotationProcessorEnvironment annotationProcessorEnvironment) {
+	TestCaseAnnotationProcessorImpl(
+			AnnotationProcessorEnvironment annotationProcessorEnvironment) {
 		this.annotationProcessorEnvironment = annotationProcessorEnvironment;
 	}
 
-	private static String generateExcelPath(){
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		String date= simpleDateFormat.format(new Date());
-
- 		return "TestCaes_"+date+XLS_EXTENSION;
-	}
-
 	public void process() {
-		Map<String, String> options = this.annotationProcessorEnvironment.getOptions();
-		LOGGER.info(String.format("[process][options map] %s",options));
+		Map<String, String> options = this.annotationProcessorEnvironment
+				.getOptions();
+		LOGGER.info(String.format("[process][options map] %s", options));
 
 		String file = getFileName(options);
- 		String folder = options.get("-s");
-		ToXslExcelStrategy toExcelHandle = new ToXslExcelStrategy(folder,file);
+		String folder = options.get("-s");
 
-		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment.getSpecifiedTypeDeclarations()) {
- 			LOGGER.debug(String.format("[process][type]found type: %s",typeDeclaration));
- 			Collection<? extends MethodDeclaration> methods = typeDeclaration.getMethods();
+		ToExcelStrategy toExcelHandle = getExcelStrategy(file, folder);
+
+		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment
+				.getSpecifiedTypeDeclarations()) {
+			LOGGER.debug(String.format("[process][type]found type: %s",
+					typeDeclaration));
+			Collection<? extends MethodDeclaration> methods = typeDeclaration
+					.getMethods();
 			for (MethodDeclaration methodDeclaration : methods) {
-   				String methodName=typeDeclaration+"."+methodDeclaration;
- 				LOGGER.debug(String.format("[process][method]found method: %s",methodName));
+				String methodName = typeDeclaration + "." + methodDeclaration;
+				LOGGER.debug(String.format("[process][method]found method: %s",
+						methodName));
 
- 				TestCase testCase = methodDeclaration.getAnnotation(TestCase.class);
- 				String simpleNameForTestCase = TestCase.class.getSimpleName();
+				TestCase testCase = methodDeclaration
+						.getAnnotation(TestCase.class);
+				String simpleNameForTestCase = TestCase.class.getSimpleName();
 
- 				if (testCase == null){
-					LOGGER.debug(String.format("[process][method] %s has no the annotation: %s", methodName,simpleNameForTestCase));
+				if (testCase == null) {
+					LOGGER.debug(String.format(
+							"[process][method] %s has no the annotation: %s",
+							methodName, simpleNameForTestCase));
 					continue;
- 				}
+				}
 
- 				LOGGER.debug(String.format("[process][method] %s has the annotation: %s", methodName, simpleNameForTestCase));
-				TestCaseWrapper testCaseWrapper = new TestCaseWrapper(testCase, methodName);
+				LOGGER.debug(String.format(
+						"[process][method] %s has the annotation: %s",
+						methodName, simpleNameForTestCase));
+				TestCaseWrapper testCaseWrapper = new TestCaseWrapper(testCase,
+						methodName);
 				LOGGER.info(testCaseWrapper);
 				toExcelHandle.add(testCaseWrapper);
 			}
@@ -66,14 +78,60 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 		toExcelHandle.generateExcelFile();
 	}
 
+	private ToExcelStrategy getExcelStrategy(String file, String folder) {
+		ToExcelStrategy toExcelStrategy;
+		if (file.endsWith(ExcelType.XLS.getExtension()))
+			toExcelStrategy = new ToXlsExcelStrategy(folder, file);
+ 		else
+			toExcelStrategy = new ToXlsxExcelStrategy(folder, file);
+
+		LOGGER.info("[process][stratgy][choose]"+toExcelStrategy.getClass().getSimpleName());
+		return toExcelStrategy;
+	}
+
 	private String getFileName(Map<String, String> options) {
-		String fileName=generateExcelPath();
+		String fileNameFromOptionConfig = getAvalueFromOptions(options,
+				OptionsConstants.FILE_NAME_OPTION);
+		if (fileNameFromOptionConfig != null) {
+			return fileNameFromOptionConfig;
+		}
+
+		return generateRandomFileName(options);
+	}
+
+	private static String generateRandomFileName(Map<String, String> options) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd_HH-mm-ss");
+		String date = simpleDateFormat.format(new Date());
+
+		ExcelType excelType = DEFAULT_EXCEL_TYPE;
+		String strExcelTypeFromOptionsConfig = getAvalueFromOptions(options,
+				OptionsConstants.EXCEL_TYPE_OPTION);
+		if (strExcelTypeFromOptionsConfig != null) {
+			ExcelType excelTypeFromOptionsConfig = ExcelType
+					.fromString(strExcelTypeFromOptionsConfig);
+			if (excelTypeFromOptionsConfig != null) {
+				excelType = excelTypeFromOptionsConfig;
+			} else {
+				throw new UnsupportedOperationException(
+						"not supported excelType: "
+								+ strExcelTypeFromOptionsConfig);
+			}
+		}
+
+		return String.format(DEFAULT_EXCEL_NAME_FORMAT, date, excelType);
+	}
+
+	private static String getAvalueFromOptions(Map<String, String> options,
+			String keyword) {
 		Set<String> keySet = options.keySet();
-		for(String key:keySet){
-			if(key.startsWith("-AfileName="))
-				fileName=key.substring("-AfileName=".length());
- 		};
-		return fileName;
+		for (String key : keySet) {
+			String keyBeforeValue = "-A" + keyword + "=";
+			if (key.startsWith(keyBeforeValue))
+				return key.substring(keyBeforeValue.length());
+		}
+		;
+		return null;
 	}
 
 }
