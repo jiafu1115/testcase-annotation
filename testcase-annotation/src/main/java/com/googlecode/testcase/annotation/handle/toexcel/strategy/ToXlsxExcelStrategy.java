@@ -14,17 +14,17 @@ import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper.TestCaseWrapperElement;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapperStringFormatter;
 
-public class ToXslExcelStrategy extends AbstractToExcelStrategy {
+public class ToXlsxExcelStrategy extends AbstractToExcelStrategy {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(ToXslExcelStrategy.class);
+			.getLogger(ToXlsxExcelStrategy.class);
 
 	private static final String SHEET_NAME = "Test Cases";
 	private static int ROW_NUMBER = 0;
 
 	private HSSFWorkbook workbook;
 
-	public ToXslExcelStrategy(String folder, String file) {
+	public ToXlsxExcelStrategy(String folder, String file) {
 		super(folder, file);
 		this.workbook = new HSSFWorkbook();
 		initialWorkbook();

@@ -10,15 +10,17 @@ import com.sun.mirror.apt.AnnotationProcessorEnvironment;
 import com.sun.mirror.apt.AnnotationProcessorFactory;
 import com.sun.mirror.declaration.AnnotationTypeDeclaration;
 
+
 /**
- * cd C:\testcase-annotation\src\main\java\com\googlecode\testcase\annotation
- * set CLASSPATH=C:\testcase-annotation\target\classes apt -nocompile -factory
- * com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl ./*.java
- *
  * @author jiafu
  *
  */
 public class AnnotationProcessFactoryImpl implements AnnotationProcessorFactory {
+
+	//to fix the multi-classloader issue:A "org.apache.log4j.ConsoleAppender" object is not assignable to a "org.apache.log4j.Appender" variable.
+	static{
+		System.setProperty("log4j.ignoreTCL", "true");
+	}
 
 	public Collection<String> supportedOptions() {
 		return Collections.emptyList();
@@ -34,4 +36,5 @@ public class AnnotationProcessFactoryImpl implements AnnotationProcessorFactory 
 		return new TestCaseAnnotationProcessorImpl(
 				annotationProcessorEnvironment);
 	}
+
 }
