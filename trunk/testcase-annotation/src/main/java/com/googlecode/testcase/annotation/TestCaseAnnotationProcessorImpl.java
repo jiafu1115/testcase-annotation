@@ -8,6 +8,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import com.googlecode.testcase.annotation.handle.toexcel.strategy.ToXslExcelStrategy;
+import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper;
 import com.sun.mirror.apt.AnnotationProcessor;
 import com.sun.mirror.apt.AnnotationProcessorEnvironment;
 import com.sun.mirror.declaration.MethodDeclaration;
@@ -52,27 +54,34 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
  		};
 
  		String folderPath = options.get("-s");
-		ToExcelHandle toExcelHandle = new ToExcelHandle(folderPath,fileName);
+		ToXslExcelStrategy toExcelHandle = new ToXslExcelStrategy(folderPath,fileName);
 
 		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment.getSpecifiedTypeDeclarations()) {
 			System.out.println("find:" + typeDeclaration);
+			LOGGER.debug(String.format("[process][type]found type: %s",typeDeclaration));
+
 
 			Collection<? extends MethodDeclaration> methods = typeDeclaration.getMethods();
 			for (MethodDeclaration methodDeclaration : methods) {
+   				String methodName=typeDeclaration+"."+methodDeclaration;
+ 				LOGGER.debug(String.format("[process][method]found method: %s",methodName));
 
-				System.out.println("___" + methodDeclaration);
+ 				TestCase testCase = methodDeclaration.getAnnotation(TestCase.class);
+ 				String simpleNameForTestCase = TestCase.class.getSimpleName();
 
-				TestCase testCase = methodDeclaration.getAnnotation(TestCase.class);
-				if (testCase == null)
+ 				if (testCase == null){
+					LOGGER.debug(String.format("[process][method] %s has no the annotation: %s", methodName,simpleNameForTestCase));
 					continue;
+ 				}
 
-				TestCaseWrapper testCaseWrapper = new TestCaseWrapper(testCase, methodDeclaration.getSimpleName());
+ 				LOGGER.debug(String.format("[process][method] %s has the annotation: %s", methodName, simpleNameForTestCase));
+				TestCaseWrapper testCaseWrapper = new TestCaseWrapper(testCase, methodName);
 				LOGGER.info(testCaseWrapper);
 				toExcelHandle.add(testCaseWrapper);
 			}
 		}
 
-		toExcelHandle.generate();
+		toExcelHandle.generateExcelFile();
 	}
 
 }
