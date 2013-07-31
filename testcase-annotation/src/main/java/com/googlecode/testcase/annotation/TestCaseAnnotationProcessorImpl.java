@@ -17,8 +17,9 @@ import com.sun.mirror.declaration.TypeDeclaration;
 
 class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
-	private static final String XLS_EXTENSION = ".xls";
-	private final static Logger LOGGER=Logger.getLogger(TestCaseAnnotationProcessorImpl.class);
+	private static final  Logger LOGGER=Logger.getLogger(TestCaseAnnotationProcessorImpl.class);
+ 	private static final String XLS_EXTENSION = ".xls";
+
 	private final AnnotationProcessorEnvironment annotationProcessorEnvironment;
 
 	TestCaseAnnotationProcessorImpl(AnnotationProcessorEnvironment annotationProcessorEnvironment) {
