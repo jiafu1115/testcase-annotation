@@ -5,6 +5,22 @@ import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper.TestCaseWrappe
 
 public class TestCaseWrapperStringFormatter extends TestCaseWrapperFormatter {
 
+	public static int getColumnWidth(TestCaseWrapperElement testCaseWrapperElement) {
+  		switch (testCaseWrapperElement) {
+		case ID:
+			return 1500;
+		case TITLE:
+ 		case PRECONDITIONS:
+ 		case STEPS:
+ 		case RESULTS:
+		case METHOD:
+			return 11000;
+		default:
+			throw new AssertionError("no key");
+		}
+	}
+
+
 	public TestCaseWrapperStringFormatter(TestCaseWrapper testCaseWrapper) {
 		super(testCaseWrapper);
 	}
@@ -37,6 +53,9 @@ public class TestCaseWrapperStringFormatter extends TestCaseWrapperFormatter {
 	}
 
 	private String formatStrArray(String[] originalStrArray) {
+		if(originalStrArray.length==1)
+			return "N/A";
+
 		StringBuilder stringBuilder = new StringBuilder(100);
 		for (int i = 0; i < originalStrArray.length; i++) {
 			String formatStr = String.format("%d. %s\n", i + 1, originalStrArray[i]);
@@ -44,22 +63,6 @@ public class TestCaseWrapperStringFormatter extends TestCaseWrapperFormatter {
 		}
 
 		return stringBuilder.toString();
-	}
-
-
-	public static int getColumnWidth(TestCaseWrapperElement testCaseWrapperElement) {
-  		switch (testCaseWrapperElement) {
-		case ID:
-			return 1500;
-		case TITLE:
- 		case PRECONDITIONS:
- 		case STEPS:
- 		case RESULTS:
-		case METHOD:
-			return 11000;
-		default:
-			throw new AssertionError("no key");
-		}
-	}
+ 	}
 
 }

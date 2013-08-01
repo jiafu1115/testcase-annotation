@@ -60,6 +60,10 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			cellStyleForCaseRow.setWrapText(testCaseWrapperElement==TestCaseWrapperElement.TITLE);
  			cellForCase.setCellStyle(cellStyleForCaseRow);
 
+ 			if(testCaseWrapperElement==TestCaseWrapperElement.METHOD){
+ 				sheet.autoSizeColumn(i);
+ 			}
+
  			if (LOGGER.isDebugEnabled())
 				LOGGER.debug(String.format(
 						"[excel][process][row %d][cell %d][set] value:%s",
