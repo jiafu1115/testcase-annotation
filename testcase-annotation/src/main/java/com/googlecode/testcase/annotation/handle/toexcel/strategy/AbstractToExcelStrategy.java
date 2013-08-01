@@ -47,11 +47,6 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			LOGGER.debug(String.format("[excel][process][row %d][add]",
 					newRowNum));
 
-		CellStyle cellStyle = this.workbook.createCellStyle();
-		cellStyle.setFillPattern(XSSFCellStyle.FINE_DOTS );
-		cellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
-		cellStyle.setFillBackgroundColor(IndexedColors.RED.getIndex());
-
 		TestCaseWrapperStringFormatter testCaseWrapperStringFormatter = new TestCaseWrapperStringFormatter(
 				testCaseWrapper);
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
@@ -62,8 +57,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 					.format(caseElements.get(i));
 			Cell cellForCase = caseRow.createCell(i);
 			cellForCase.setCellValue(caseElementValue);
-			cellForCase.setCellStyle(cellStyle);
-			if (LOGGER.isDebugEnabled())
+ 			if (LOGGER.isDebugEnabled())
 				LOGGER.debug(String.format(
 						"[excel][process][row %d][cell %d][set] value:%s",
 						newRowNum, i, caseElementValue));
@@ -93,12 +87,17 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		LOGGER.info(String.format("[excel][initial][sheet %d][row 0][add]", newSheetNumber));
 		Row firstRow = sheet.createRow(0);
 
+		CellStyle cellStyle = getCellFormatForFirstRow();
+
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
 				.toListAsSequence();
 		int size = caseElements.size();
 		for (int i = 0; i < size; i++) {
 			String cellValue = caseElements.get(i).toString();
-			firstRow.createCell(i).setCellValue(cellValue);
+			Cell cell = firstRow.createCell(i);
+			cell.setCellValue(cellValue);
+			cell.setCellStyle(cellStyle);
+
 			if (LOGGER.isDebugEnabled())
 				LOGGER.info(String.format(
 						"[excel][initial][row 0][cell %d][set] value:%s", i,
@@ -106,6 +105,14 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		}
 
 		return sheet;
+	}
+
+	private CellStyle getCellFormatForFirstRow() {
+		CellStyle cellStyle = this.workbook.createCellStyle();
+		cellStyle.setFillPattern(XSSFCellStyle.FINE_DOTS );
+		cellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
+		cellStyle.setFillBackgroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+		return cellStyle;
 	}
 
 	private String getSheetName(TestCaseWrapper testCaseWrapper) {
