@@ -4,13 +4,41 @@
 	<groupId>com.googlecode.testcase-annotation</groupId>
 	<artifactId>testcase-annotation</artifactId>
 	<version>1.3.2</version>
+	<packaging>jar</packaging>
+	<name>testcase-annotation</name>
+	<description>export test case to excel from annotation by java annotation tool.</description>
+	<url>http://code.google.com/p/testcase-annotation/</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>scm:svn:http://testcase-annotation.googlecode.com/svn/trunk/</url>
+		<connection>scm:svn:http://testcase-annotation.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:http://testcase-annotation.googlecode.com/svn/trunk/</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<id>fujian1115</id>
+			<name>fu.jian</name>
+			<email>fujian1115@gmail.com</email>
+		</developer>
+	</developers>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-excelant</artifactId>
 			<version>3.10-beta1</version>
 		</dependency>
-		  <dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.12</version>
@@ -18,6 +46,49 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
