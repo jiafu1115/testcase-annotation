@@ -34,7 +34,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 
 	public void add(TestCaseWrapper testCaseWrapper) {
 		String title = testCaseWrapper.getTestCase().title();
-		LOGGER.info(String.format("[excel][process][add test case %s][begin] ",
+		LOGGER.info(String.format("[excel][process][add test case][begin] %s",
 				title));
 		Sheet sheet = createNewSheetIfNeed(testCaseWrapper);
 
@@ -60,7 +60,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 						newRowNum, i, caseElementValue));
 		}
 
-		LOGGER.info(String.format("[excel][process][add test case %s][end] ",
+		LOGGER.info(String.format("[excel][process][add test case][end] %s",
 				title));
 	}
 
