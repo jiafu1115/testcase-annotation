@@ -134,7 +134,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 				file.mkdirs();
 			}
 
-			String outputFullPath = folder + "\\" + this.file;
+ 			String outputFullPath = folder + "\\" + this.file;
 			LOGGER.info(String.format(
 					"[excel][result][output] excel file path: %s",
 					outputFullPath));
@@ -156,6 +156,12 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 	protected void writeOutputStreamToWorkbook(FileOutputStream os)
 			throws IOException {
 		workbook.write(os);
+	}
+
+	@Override
+	public String toString() {
+		return "AbstractToExcelStrategy [folder=" + folder + ", file=" + file
+				+ "]";
 	}
 
 }

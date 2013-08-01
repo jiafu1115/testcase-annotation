@@ -37,7 +37,7 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 		LOGGER.info(String.format("[processor][info][options map] %s", options));
 
 		String file = getFileName(options);
-		String folder = options.get("-s");
+		String folder = options.get("-d");
 
 		ToExcelStrategy toExcelHandle = getExcelStrategy(file, folder);
 
@@ -89,6 +89,8 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 			toExcelStrategy = new ToXlsxExcelStrategy(folder, file);
 
 		LOGGER.info("[processor][stratgy][choose]"+toExcelStrategy.getClass().getSimpleName());
+		LOGGER.info("[processor][stratgy][info]"+toExcelStrategy);
+
 		return toExcelStrategy;
 	}
 
