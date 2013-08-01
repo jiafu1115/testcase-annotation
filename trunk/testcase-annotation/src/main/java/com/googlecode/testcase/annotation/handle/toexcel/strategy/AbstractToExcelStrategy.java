@@ -33,15 +33,16 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 	}
 
 	public void add(TestCaseWrapper testCaseWrapper) {
-		String sheetName = getSheetName(testCaseWrapper);
-		Sheet sheet = workbook.getSheet(sheetName);
-		if (sheet == null) {
-			sheet = createAndInitailSheet(sheetName);
-		}
+		String title = testCaseWrapper.getTestCase().title();
+		LOGGER.info(String.format("[excel][process][add test case %s][begin] ",
+				title));
+		Sheet sheet = createNewSheetIfNeed(testCaseWrapper);
 
 		int newRowNum = sheet.getLastRowNum() + 1;
 		Row caseRow = sheet.createRow(newRowNum);
-		LOGGER.debug(String.format("[excel][process][row %d][add]", newRowNum));
+		if (LOGGER.isDebugEnabled())
+			LOGGER.debug(String.format("[excel][process][row %d][add]",
+					newRowNum));
 
 		TestCaseWrapperStringFormatter testCaseWrapperStringFormatter = new TestCaseWrapperStringFormatter(
 				testCaseWrapper);
@@ -53,19 +54,34 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 					.format(caseElements.get(i));
 			Cell cellForCase = caseRow.createCell(i);
 			cellForCase.setCellValue(caseElementValue);
-			LOGGER.debug(String.format(
-					"[excel][process][row %d][cell %d][set] value:%s",
-					newRowNum, i, caseElementValue));
+			if (LOGGER.isDebugEnabled())
+				LOGGER.debug(String.format(
+						"[excel][process][row %d][cell %d][set] value:%s",
+						newRowNum, i, caseElementValue));
 		}
+
+		LOGGER.info(String.format("[excel][process][add test case %s][end] ",
+				title));
+	}
+
+	private Sheet createNewSheetIfNeed(TestCaseWrapper testCaseWrapper) {
+		String sheetName = getSheetName(testCaseWrapper);
+		Sheet sheet = workbook.getSheet(sheetName);
+		if (sheet == null) {
+			sheet = createAndInitailSheet(sheetName);
+		}
+		return sheet;
 	}
 
 	/**
 	 * create first sheet and first row
 	 */
 	private Sheet createAndInitailSheet(String sheetName) {
-		LOGGER.info("[excel][initial][sheet 0][add]");
-		Sheet sheet = workbook.createSheet(sheetName);
-		LOGGER.info("[excel][initial][row 0][add]");
+		LOGGER.info("[excel][initial]need create sheet:"+sheetName);
+		int newSheetNumber = workbook.getNumberOfSheets()+1;
+		LOGGER.info(String.format("[excel][initial][sheet %d][add] sheet:%s",newSheetNumber, sheetName));
+  		Sheet sheet = workbook.createSheet(sheetName);
+		LOGGER.info(String.format("[excel][initial][sheet %d][row 0][add]", newSheetNumber));
 		Row firstRow = sheet.createRow(0);
 
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
@@ -74,9 +90,10 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		for (int i = 0; i < size; i++) {
 			String cellValue = caseElements.get(i).toString();
 			firstRow.createCell(i).setCellValue(cellValue);
-			LOGGER.info(String.format(
-					"[excel][initial][row 0][cell %d][set] value:%s", i,
-					cellValue));
+			if (LOGGER.isDebugEnabled())
+				LOGGER.info(String.format(
+						"[excel][initial][row 0][cell %d][set] value:%s", i,
+						cellValue));
 		}
 
 		return sheet;
@@ -94,11 +111,15 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		writeExcelFile();
 	}
 
- 	private void changeSheetNameIfNeed() {
+	private void changeSheetNameIfNeed() {
 		int numberOfSheets = workbook.getNumberOfSheets();
-		Sheet sheet = workbook.getSheet(ExcelConstants.DEFAULT_SHEET_NAME_WHEN_MORE_SHEET_EXIST);
-		if(numberOfSheets==1&&sheet!=null){
-			workbook.setSheetName(workbook.getSheetIndex(ExcelConstants.DEFAULT_SHEET_NAME_WHEN_MORE_SHEET_EXIST), ExcelConstants.DEFAULT_SHEET_NAME_WHEN_ONLY_DEFAULT_MODULE_EXIST);
+		Sheet sheet = workbook
+				.getSheet(ExcelConstants.DEFAULT_SHEET_NAME_WHEN_MORE_SHEET_EXIST);
+		if (numberOfSheets == 1 && sheet != null) {
+			workbook.setSheetName(
+					workbook.getSheetIndex(ExcelConstants.DEFAULT_SHEET_NAME_WHEN_MORE_SHEET_EXIST),
+					ExcelConstants.DEFAULT_SHEET_NAME_WHEN_ONLY_DEFAULT_MODULE_EXIST);
+			LOGGER.info(String.format("[excel][result][update]change sheet name from %s to %s when only one module undefined name", ExcelConstants.DEFAULT_SHEET_NAME_WHEN_MORE_SHEET_EXIST,ExcelConstants.DEFAULT_SHEET_NAME_WHEN_ONLY_DEFAULT_MODULE_EXIST));
 		}
 	}
 
@@ -131,7 +152,6 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 				}
 		}
 	}
-
 
 	protected void writeOutputStreamToWorkbook(FileOutputStream os)
 			throws IOException {

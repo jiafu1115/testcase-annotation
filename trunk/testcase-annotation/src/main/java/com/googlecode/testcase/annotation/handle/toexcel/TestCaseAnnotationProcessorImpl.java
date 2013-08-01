@@ -34,7 +34,7 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 	public void process() {
 		Map<String, String> options = this.annotationProcessorEnvironment
 				.getOptions();
-		LOGGER.info(String.format("[process][options map] %s", options));
+		LOGGER.info(String.format("[processor][info][options map] %s", options));
 
 		String file = getFileName(options);
 		String folder = options.get("-s");
@@ -43,13 +43,14 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
 		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment
 				.getSpecifiedTypeDeclarations()) {
-			LOGGER.debug(String.format("[processor][discover][type]found type: %s",
+ 			LOGGER.info(String.format("[processor][discover][type][found]type: %s",
 					typeDeclaration));
 			Collection<? extends MethodDeclaration> methods = typeDeclaration
 					.getMethods();
 			for (MethodDeclaration methodDeclaration : methods) {
 				String methodName = typeDeclaration + "." + methodDeclaration;
-				LOGGER.debug(String.format("[processor][discover][method]found method: %s",
+				if(LOGGER.isDebugEnabled())
+				LOGGER.debug(String.format("[processor][discover][method][found]method: %s",
 						methodName));
 
 				TestCase testCase = methodDeclaration
@@ -57,18 +58,22 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 				String simpleNameForTestCase = TestCase.class.getSimpleName();
 
 				if (testCase == null) {
+					if (LOGGER.isDebugEnabled())
 					LOGGER.debug(String.format(
-							"[processor][discover][method] %s has no the annotation: %s",
+							"[processor][discover][method][judge] %s has no the annotation: %s",
 							methodName, simpleNameForTestCase));
 					continue;
 				}
 
+				if(LOGGER.isDebugEnabled())
 				LOGGER.debug(String.format(
-						"[processor][discover][method] %s has the annotation: %s",
+						"[processor][discover][method][judge] %s has the annotation: %s",
 						methodName, simpleNameForTestCase));
 				TestCaseWrapper testCaseWrapper = new TestCaseWrapper(testCase,
 						methodName);
-				LOGGER.info(testCaseWrapper);
+
+				if(LOGGER.isDebugEnabled())
+					LOGGER.debug(String.format("[processor][discover][test case][info]annotation: %s", testCaseWrapper));
 				toExcelHandle.add(testCaseWrapper);
 			}
 		}
