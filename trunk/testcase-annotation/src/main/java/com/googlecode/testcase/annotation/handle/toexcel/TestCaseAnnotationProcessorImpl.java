@@ -1,4 +1,4 @@
-package com.googlecode.testcase.annotation;
+package com.googlecode.testcase.annotation.handle.toexcel;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -8,7 +8,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.googlecode.testcase.annotation.handle.toexcel.ExcelType;
+import com.googlecode.testcase.annotation.OptionsConstants;
+import com.googlecode.testcase.annotation.TestCase;
 import com.googlecode.testcase.annotation.handle.toexcel.strategy.ToExcelStrategy;
 import com.googlecode.testcase.annotation.handle.toexcel.strategy.ToXlsxExcelStrategy;
 import com.googlecode.testcase.annotation.handle.toexcel.strategy.ToXlsExcelStrategy;
@@ -18,17 +19,14 @@ import com.sun.mirror.apt.AnnotationProcessorEnvironment;
 import com.sun.mirror.declaration.MethodDeclaration;
 import com.sun.mirror.declaration.TypeDeclaration;
 
-class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
-
-	public static final String DEFAULT_EXCEL_NAME_FORMAT = "TestCase_%s%s";
-	public static final ExcelType DEFAULT_EXCEL_TYPE = ExcelType.XLS;
+public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(TestCaseAnnotationProcessorImpl.class);
 
 	private final AnnotationProcessorEnvironment annotationProcessorEnvironment;
 
-	TestCaseAnnotationProcessorImpl(
+	public TestCaseAnnotationProcessorImpl(
 			AnnotationProcessorEnvironment annotationProcessorEnvironment) {
 		this.annotationProcessorEnvironment = annotationProcessorEnvironment;
 	}
@@ -45,13 +43,13 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
 		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment
 				.getSpecifiedTypeDeclarations()) {
-			LOGGER.debug(String.format("[process][type]found type: %s",
+			LOGGER.debug(String.format("[processor][discover][type]found type: %s",
 					typeDeclaration));
 			Collection<? extends MethodDeclaration> methods = typeDeclaration
 					.getMethods();
 			for (MethodDeclaration methodDeclaration : methods) {
 				String methodName = typeDeclaration + "." + methodDeclaration;
-				LOGGER.debug(String.format("[process][method]found method: %s",
+				LOGGER.debug(String.format("[processor][discover][method]found method: %s",
 						methodName));
 
 				TestCase testCase = methodDeclaration
@@ -60,13 +58,13 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
 				if (testCase == null) {
 					LOGGER.debug(String.format(
-							"[process][method] %s has no the annotation: %s",
+							"[processor][discover][method] %s has no the annotation: %s",
 							methodName, simpleNameForTestCase));
 					continue;
 				}
 
 				LOGGER.debug(String.format(
-						"[process][method] %s has the annotation: %s",
+						"[processor][discover][method] %s has the annotation: %s",
 						methodName, simpleNameForTestCase));
 				TestCaseWrapper testCaseWrapper = new TestCaseWrapper(testCase,
 						methodName);
@@ -85,7 +83,7 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
  		else
 			toExcelStrategy = new ToXlsxExcelStrategy(folder, file);
 
-		LOGGER.info("[process][stratgy][choose]"+toExcelStrategy.getClass().getSimpleName());
+		LOGGER.info("[processor][stratgy][choose]"+toExcelStrategy.getClass().getSimpleName());
 		return toExcelStrategy;
 	}
 
@@ -104,7 +102,7 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 				"yyyy-MM-dd_HH-mm-ss");
 		String date = simpleDateFormat.format(new Date());
 
-		ExcelType excelType = DEFAULT_EXCEL_TYPE;
+		ExcelType excelType = ExcelConstants.DEFAULT_EXCEL_TYPE;
 		String strExcelTypeFromOptionsConfig = getAvalueFromOptions(options,
 				OptionsConstants.EXCEL_TYPE_OPTION);
 		if (strExcelTypeFromOptionsConfig != null) {
@@ -119,7 +117,7 @@ class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 			}
 		}
 
-		return String.format(DEFAULT_EXCEL_NAME_FORMAT, date, excelType);
+		return String.format(ExcelConstants.DEFAULT_EXCEL_NAME_FORMAT, date, excelType);
 	}
 
 	private static String getAvalueFromOptions(Map<String, String> options,
