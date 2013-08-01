@@ -7,9 +7,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import com.googlecode.testcase.annotation.handle.toexcel.ExcelConstants;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper;
@@ -44,6 +47,11 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			LOGGER.debug(String.format("[excel][process][row %d][add]",
 					newRowNum));
 
+		CellStyle cellStyle = this.workbook.createCellStyle();
+		cellStyle.setFillPattern(XSSFCellStyle.FINE_DOTS );
+		cellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+		cellStyle.setFillBackgroundColor(IndexedColors.RED.getIndex());
+
 		TestCaseWrapperStringFormatter testCaseWrapperStringFormatter = new TestCaseWrapperStringFormatter(
 				testCaseWrapper);
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
@@ -54,6 +62,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 					.format(caseElements.get(i));
 			Cell cellForCase = caseRow.createCell(i);
 			cellForCase.setCellValue(caseElementValue);
+			cellForCase.setCellStyle(cellStyle);
 			if (LOGGER.isDebugEnabled())
 				LOGGER.debug(String.format(
 						"[excel][process][row %d][cell %d][set] value:%s",
