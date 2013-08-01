@@ -32,13 +32,13 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy{
 		this.folder=folder;
 		this.file=file;
 		this.workbook=workbook;
-		initialWorkbook();
+		initialWorkbook(workbook);
   	}
 
 	/**
 	 * create first sheet and first row
 	 */
-	private void initialWorkbook() {
+	private void initialWorkbook(Workbook workbook) {
 		LOGGER.info("[excel][initial][sheet 0][add]");
 		Sheet  sheet = workbook.createSheet(SHEET_NAME);
  		LOGGER.info("[excel][initial][row 0][add]");

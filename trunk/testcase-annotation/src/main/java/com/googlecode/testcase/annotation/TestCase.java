@@ -14,7 +14,6 @@ public @interface TestCase {
 	String[] preConditions() default "";
 	String[] steps();
 	String[] results();
-	
-	
+	String  module() default "";
 
 }
