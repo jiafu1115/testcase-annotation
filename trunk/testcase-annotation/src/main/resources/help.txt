@@ -24,6 +24,7 @@
 <!-- 						<option>fileName=TestCase.xlsx</option>
  -->						<option>excelType=xlsx</option>
  					</options>
+ 			<!--		<outputDirectory>C:\testapt</outputDirectory>  -->
  				</configuration>
 			</plugin>
 		</plugins>
