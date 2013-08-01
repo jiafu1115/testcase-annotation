@@ -1,27 +1,24 @@
 package com.googlecode.testcase.annotation.handle.toexcel.strategy;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import com.googlecode.testcase.annotation.handle.toexcel.ExcelConstants;
+import com.googlecode.testcase.annotation.handle.toexcel.ExcelUtil;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper.TestCaseWrapperElement;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapperStringFormatter;
 
 public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 
-	private static final Logger LOGGER = Logger
+	public static final Logger LOGGER = Logger
 			.getLogger(AbstractToExcelStrategy.class);
 
 	protected String folder;
@@ -47,16 +44,22 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			LOGGER.debug(String.format("[excel][process][row %d][add]",
 					newRowNum));
 
-		TestCaseWrapperStringFormatter testCaseWrapperStringFormatter = new TestCaseWrapperStringFormatter(
+ 		TestCaseWrapperStringFormatter testCaseWrapperStringFormatter = new TestCaseWrapperStringFormatter(
 				testCaseWrapper);
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
 				.toListAsSequence();
 		int size = caseElements.size();
 		for (int i = 0; i < size; i++) {
+			TestCaseWrapperElement testCaseWrapperElement = caseElements.get(i);
 			String caseElementValue = testCaseWrapperStringFormatter
-					.format(caseElements.get(i));
+					.format(testCaseWrapperElement);
 			Cell cellForCase = caseRow.createCell(i);
 			cellForCase.setCellValue(caseElementValue);
+
+			CellStyle cellStyleForCaseRow = getCellStyleForCaseRow();
+			cellStyleForCaseRow.setWrapText(testCaseWrapperElement==TestCaseWrapperElement.TITLE);
+ 			cellForCase.setCellStyle(cellStyleForCaseRow);
+
  			if (LOGGER.isDebugEnabled())
 				LOGGER.debug(String.format(
 						"[excel][process][row %d][cell %d][set] value:%s",
@@ -65,6 +68,14 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 
 		LOGGER.info(String.format("[excel][process][add test case][end] %s",
 				title));
+	}
+
+	private CellStyle getCellStyleForCaseRow() {
+		CellStyle cellStyle = workbook.createCellStyle();
+ 		cellStyle.setAlignment(CellStyle.ALIGN_LEFT);
+		cellStyle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+
+		return cellStyle;
 	}
 
 	private Sheet createNewSheetIfNeed(TestCaseWrapper testCaseWrapper) {
@@ -88,15 +99,17 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		Row firstRow = sheet.createRow(0);
 
 		CellStyle cellStyle = getCellFormatForFirstRow();
-
+		firstRow.setRowStyle(cellStyle);
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
 				.toListAsSequence();
 		int size = caseElements.size();
 		for (int i = 0; i < size; i++) {
-			String cellValue = caseElements.get(i).toString();
+			TestCaseWrapperElement testCaseWrapperElement = caseElements.get(i);
+			String cellValue = testCaseWrapperElement.toString();
 			Cell cell = firstRow.createCell(i);
 			cell.setCellValue(cellValue);
-			cell.setCellStyle(cellStyle);
+
+ 			applyCellStyle(sheet, cellStyle, i, testCaseWrapperElement, cell);
 
 			if (LOGGER.isDebugEnabled())
 				LOGGER.info(String.format(
@@ -107,12 +120,23 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		return sheet;
 	}
 
+	private void applyCellStyle(Sheet sheet, CellStyle cellStyle, int i,
+			TestCaseWrapperElement testCaseWrapperElement, Cell cell) {
+		cell.setCellStyle(cellStyle);
+		sheet.setColumnWidth(i, TestCaseWrapperStringFormatter.getColumnWidth(testCaseWrapperElement));
+	}
+
 	private CellStyle getCellFormatForFirstRow() {
 		CellStyle cellStyle = this.workbook.createCellStyle();
-		cellStyle.setFillPattern(XSSFCellStyle.FINE_DOTS );
-		cellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
-		cellStyle.setFillBackgroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-		return cellStyle;
+        Font font = workbook.createFont();
+        font.setColor(Font.COLOR_RED);
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+
+        cellStyle.setFont(font);
+        cellStyle.setFillForegroundColor((short) 13);
+        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        return cellStyle;
 	}
 
 	private String getSheetName(TestCaseWrapper testCaseWrapper) {
@@ -124,7 +148,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 
 	public void generateExcelFile() {
 		changeSheetNameIfNeed();
-		writeExcelFile();
+		ExcelUtil.writeExcelFile(folder,file,workbook);
 	}
 
 	private void changeSheetNameIfNeed() {
@@ -139,40 +163,6 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		}
 	}
 
-	private void writeExcelFile() {
-		FileOutputStream fileOutputStream = null;
-		try {
-			File file = new File(folder);
-			if (!file.exists()) {
-				LOGGER.info(String
-						.format("[excel]excel file's folder [%s] hasn't exist, to create it",
-								folder));
-				file.mkdirs();
-			}
-
- 			String outputFullPath = folder + "\\" + this.file;
-			LOGGER.info(String.format(
-					"[excel][result][output] excel file path: %s",
-					outputFullPath));
-
-			fileOutputStream = new FileOutputStream(outputFullPath);
-			writeOutputStreamToWorkbook(fileOutputStream);
-		} catch (IOException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		} finally {
-			if (fileOutputStream != null)
-				try {
-					fileOutputStream.close();
-				} catch (IOException e) {
-					LOGGER.warn(e.getMessage(), e);
-				}
-		}
-	}
-
-	protected void writeOutputStreamToWorkbook(FileOutputStream os)
-			throws IOException {
-		workbook.write(os);
-	}
 
 	@Override
 	public String toString() {
