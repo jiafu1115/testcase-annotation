@@ -46,4 +46,20 @@ public class TestCaseWrapperStringFormatter extends TestCaseWrapperFormatter {
 		return stringBuilder.toString();
 	}
 
+
+	public static int getColumnWidth(TestCaseWrapperElement testCaseWrapperElement) {
+  		switch (testCaseWrapperElement) {
+		case ID:
+			return 1500;
+		case TITLE:
+ 		case PRECONDITIONS:
+ 		case STEPS:
+ 		case RESULTS:
+		case METHOD:
+			return 11000;
+		default:
+			throw new AssertionError("no key");
+		}
+	}
+
 }
