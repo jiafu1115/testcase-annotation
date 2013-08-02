@@ -53,7 +53,7 @@ public class TestCaseWrapperStringFormatter extends TestCaseWrapperFormatter {
 	}
 
 	private String formatStrArray(String[] originalStrArray) {
-		if(originalStrArray.length==1)
+		if(originalStrArray.length==1&&originalStrArray[0].isEmpty())
 			return "N/A";
 
 		StringBuilder stringBuilder = new StringBuilder(100);
