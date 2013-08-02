@@ -7,7 +7,14 @@ to list and track the todo list
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * eclipse plugin if need        [todo]
+  * logger(if debugable and format,etc)  [doing]
+  * to generate execl 03/07 or 10  [complete]
+  * path concat: linux/windows, if contain \.  [todo]
+  * private static final String DEFAULT_EXCEL_NAME_FORMAT = "TestCase_%s%s"; to use %n date  [todo]
+  * support module/sheet in the test case [complete]
+  * format pom.xml to match central maven requirements [complete]
+  * validation [todo]
+
+ 
+  
