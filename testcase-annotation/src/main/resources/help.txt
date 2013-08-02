@@ -21,6 +21,14 @@
  					</options>
  			 		<outputDirectory>C:\testapt</outputDirectory>  -->
  				</configuration>
+ 				<!-- 				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+					</execution>
+				</executions> -->
 			</plugin>
 		</plugins>
 	</build>
@@ -28,3 +36,16 @@
 2  run "mvn apt:process" to handle src/main/java or "mvn apt:test-process" to handle src/test/java.
 detailed info can refer to:
 http://mojo.codehaus.org/apt-maven-plugin/
+
+3 if customized the lifecycle in maven:
+
+mvn process-resources
+
+add 			<!-- <executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+					</execution>
+				</executions> -->
