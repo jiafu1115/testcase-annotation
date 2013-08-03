@@ -37,15 +37,17 @@
 detailed info can refer to:
 http://mojo.codehaus.org/apt-maven-plugin/
 
-3 if customized the lifecycle in maven:
+3 if customized the lifecycle in maven: add into <plugin></plugin>
 
 mvn test
 
 add 			<!-- <executions>
+					<executions>
 					<execution>
 						<phase>test</phase>
 						<goals>
 							<goal>process</goal>
+							<goal>test-process</goal>
 						</goals>
 					</execution>
 				</executions> -->
