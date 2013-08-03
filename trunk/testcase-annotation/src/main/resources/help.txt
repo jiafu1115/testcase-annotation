@@ -23,7 +23,7 @@
  				</configuration>
  				<!-- 				<executions>
 					<execution>
-						<phase>process-resources</phase>
+						<phase>test</phase>
 						<goals>
 							<goal>process</goal>
 						</goals>
@@ -39,11 +39,11 @@ http://mojo.codehaus.org/apt-maven-plugin/
 
 3 if customized the lifecycle in maven:
 
-mvn process-resources
+mvn test
 
 add 			<!-- <executions>
 					<execution>
-						<phase>process-resources</phase>
+						<phase>test</phase>
 						<goals>
 							<goal>process</goal>
 						</goals>
