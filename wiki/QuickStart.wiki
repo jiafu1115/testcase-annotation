@@ -9,6 +9,8 @@ We can use @testcase to write test case for java methods and generate them to on
 ==step 1: configure pom.xml==
 
 add followed two configure parts:dependency and plugin into pom.xml:
+note: the dependency's last version can check the maven central: 
+http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.googlecode.testcase-annotation%22
 
 {{{
 <dependency>
