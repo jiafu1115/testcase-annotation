@@ -8,7 +8,7 @@ We can use this annotation and its' processor tool to use @testcase to write tes
 
 ==step 1: configure pom.xml==
 
-add followed two configure parts into pom.xml:
+add followed two configure parts:dependency and plugin into pom.xml:
 
 {{{
 <dependency>
@@ -57,15 +57,15 @@ public class YourTestCase {
 
 ==step 3: generate excel: execute mvn apt:process or mvn apt:test-process ==
 
-execute: mvn apt:process or apt:test-process
+execute: *mvn apt:process* or *apt:test-process*
 
 the goal can refer to :http://mojo.codehaus.org/apt-maven-plugin/plugin-info.html
 
 output excel's dir: it is outputDirectory configure. http://mojo.codehaus.org/apt-maven-plugin/process-mojo.html#outputDirectory
 
-for apt:process, the output dir is target\generated-resources\apt
+for apt:process, the output dir is *target\generated-resources\apt*
 
-for apt:test-process, the output dir is target\generated-test-sources\apt
+for apt:test-process, the output dir is *target\generated-test-sources\apt*
 
 
 
