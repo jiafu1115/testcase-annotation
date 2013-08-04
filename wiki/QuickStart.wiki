@@ -84,7 +84,7 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>
 </configuration>
 }}}
 
-==Use 2: How to change the excel's name instead of TestCase_Date.xlsx?==
+==Use 2: How to change the excel's name instead of `TestCase_Date.xlsx?`==
 
 the excel file's name is TestCase_Date format. if you want to change it, you can:
 
@@ -105,7 +105,9 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
 add configure: *outputdirectory*:
 {{{
 <configuration>
-<factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>
+<factory>
+com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
+</factory>
 <outputdirectory>C:\aptDir</outputdirectory>
 </configuration>
 }}}
