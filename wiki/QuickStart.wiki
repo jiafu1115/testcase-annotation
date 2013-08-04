@@ -1,4 +1,4 @@
-#We can use this annotation and its' processor tool to use @testcase to write test case for java methods and generate them to one excel.
+We can use this annotation and its' processor tool to use @testcase to write test case for java methods and generate them to one excel.
 
 = Requirements =
 
@@ -6,7 +6,8 @@
 
 = How to use it =
 
-==step 1==
+==step 1: configure pom.xml==
+
 add followed two configure parts into pom.xml:
 
 {{{
@@ -26,6 +27,33 @@ add followed two configure parts into pom.xml:
 </plugin>
 }}}
 
+==step 2: use @TestCase in your code ==
+
+{{{
+public class YourTestCase {
+
+
+	@TestCase(
+			module="case module",
+			id = 3,
+		 	title = "case title",
+		 	preConditions={"condition"},
+			steps = {
+				"case step one",
+				"case step two"
+				},
+			results = {
+				"case result one",
+				"case result two"
+				  }
+ 			)
+	@Test
+	public void YourTestMethod() {
+
+ 	}
+	
+}
+}}}
 = Details =
 
 Add your content here.  Format your content with:
