@@ -27,7 +27,7 @@ add followed two configure parts into pom.xml:
 </plugin>
 }}}
 
-==step 2: use @TestCase in your code ==
+==step 2: use *@TestCase* in your code ==
 
 {{{
 public class YourTestCase {
@@ -63,7 +63,9 @@ the goal can refer to :http://mojo.codehaus.org/apt-maven-plugin/plugin-info.htm
 output excel's dir: it is outputDirectory configure. http://mojo.codehaus.org/apt-maven-plugin/process-mojo.html#outputDirectory
 
 for apt:process, the output dir is target\generated-resources\apt
+
 for apt:test-process, the output dir is target\generated-test-sources\apt
+
 
 
 = Details =
