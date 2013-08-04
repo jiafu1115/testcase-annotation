@@ -46,7 +46,7 @@ public class YourTestCase {
 				"case result one",
 				"case result two"
 				  }
- 			)
+ 		 )
 	@Test
 	public void YourTestMethod() {
 
@@ -114,6 +114,24 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
 
 ==Use 4: How to bind to other maven lifecycle phrase?==
 
+add the executions to maven apt plugin:
+ 
 
+
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>apt-maven-plugin</artifactId>
+    <version>1.0-alpha-5</version>
+    <configuration>				         <factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>    </configuration>
+    <executions>
+        <execution>
+            <phase>test</phase>
+            <goals>
+                <goal>process</goal>
+                <goal>test-process</goal>
+           </goals>
+        </execution>
+    </executions>
+</plugin>
 
  
