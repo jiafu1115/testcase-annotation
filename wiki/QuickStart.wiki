@@ -1,13 +1,13 @@
-#summary One-sentence summary of this page.
+#We can use this annotation and its' processor tool to use @testcase to write test case for java methods and generate them to one excel.
 
 = Requirements =
 
-maven project
+1.maven project
 
 = How to use it =
 
 ==step 1==
-add followed configure into pom.xml:
+add followed two configure parts into pom.xml:
 
 {{{
 <dependency>
@@ -15,6 +15,15 @@ add followed configure into pom.xml:
     <artifactid>testcase-annotation</artifactid>
     <version>1.0.1</version>
 </dependency>
+}}}
+
+{{{
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>apt-maven-plugin</artifactId>
+    <version>1.0-alpha-5</version>
+    <configuration>				         <factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>    </configuration>
+</plugin>
 }}}
 
 = Details =
