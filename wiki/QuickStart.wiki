@@ -118,7 +118,7 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
 
 ==Use 4: How to bind to other maven lifecycle phrase?==
 
-add the *executions* to maven apt plugin:
+if want to bind to test,add the *executions* to maven apt plugin:
  
 {{{
 <plugin>
@@ -141,4 +141,6 @@ add the *executions* to maven apt plugin:
     </executions>
 </plugin>
 }}}
+
+and run mvn test can trigger both process and test-process for maven apt
  
