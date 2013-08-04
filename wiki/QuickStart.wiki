@@ -1,0 +1,25 @@
+#summary One-sentence summary of this page.
+
+= Requirements =
+
+maven project
+
+= How to use it =
+
+==step 1==
+add followed configure into pom.xml:
+
+{{{
+<dependency>
+    <groupid>com.googlecode.testcase-annotation</groupid>
+    <artifactid>testcase-annotation</artifactid>
+    <version>1.0.1</version>
+</dependency>
+}}}
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
