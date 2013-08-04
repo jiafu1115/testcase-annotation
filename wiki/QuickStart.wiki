@@ -67,7 +67,7 @@ for apt:process, the output dir is *target\generated-resources\apt*
 
 for apt:test-process, the output dir is *target\generated-test-sources\apt*
 
-
+http://ww2.sinaimg.cn/large/7d9d794bgw1e7an3tz2saj20ue060gmi.jpg
 
 = Details =
 
