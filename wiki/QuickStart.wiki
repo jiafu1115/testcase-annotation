@@ -20,10 +20,10 @@ add followed two configure parts:dependency and plugin into pom.xml:
 
 {{{
 <plugin>
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>apt-maven-plugin</artifactId>
-    <version>1.0-alpha-5</version>
-    <configuration>				         <factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>    </configuration>
+<groupId>org.codehaus.mojo</groupId>
+<artifactId>apt-maven-plugin</artifactId>
+<version>1.0-alpha-5</version>
+<configuration>				         <factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory></configuration>
 </plugin>
 }}}
 
