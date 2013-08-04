@@ -71,4 +71,45 @@ http://ww2.sinaimg.cn/large/7d9d794bgw1e7an3tz2saj20ue060gmi.jpg
 
 = More use examples=
 
-==Use 1: How to generate 03xls excel file instend of 07xlsx?==
+==Use 1: How to generate office 03xls excel file instend of 07xlsx's?==
+
+add option: *excelType=xls*
+
+<configuration>
+<factory>
+com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl?
+</factory>
+<options>
+<option>excelType=xls</option>
+</options>
+</configuration>
+
+==Use 2: How to change the excel's name?==
+
+the excel file's name is TestCase_Date format. if you want to change it, you can:
+
+add option: *excelType=xls*
+
+<configuration>
+<factory>
+com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl?
+</factory>
+<options>
+<option>fileName=customizedName.xlsx</option>
+</options>
+</configuration>
+
+==Use 2: How to change the excel's output dir?==
+
+add configure  outputdirectory:
+
+<configuration>
+<factory>
+com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl?
+</factory>
+<outputdirectory>
+C:\aptDir
+</outputdirectory>
+</configuration>
+
+ 
