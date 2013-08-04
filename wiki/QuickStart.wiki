@@ -20,10 +20,14 @@ add followed two configure parts:dependency and plugin into pom.xml:
 
 {{{
 <plugin>
-<groupId>org.codehaus.mojo</groupId>
-<artifactId>apt-maven-plugin</artifactId>
-<version>1.0-alpha-5</version>
-<configuration>				         <factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory></configuration>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>apt-maven-plugin</artifactId>
+    <version>1.0-alpha-5</version>
+    <configuration>   
+        <factory>
+        com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
+        </factory>
+    </configuration>
 </plugin>
 }}}
 
@@ -63,9 +67,9 @@ the goals can refer to :http://mojo.codehaus.org/apt-maven-plugin/plugin-info.ht
 
 output excel's dir: it is decided to outputDirectory configure by default: http://mojo.codehaus.org/apt-maven-plugin/process-mojo.html#outputDirectory
 
-for apt:process, the output dir is *target\generated-resources\apt*
+  * for apt:process, the output dir is _target\generated-resources\apt_
 
-for apt:test-process, the output dir is *target\generated-test-sources\apt*
+  * for apt:test-process, the output dir is _target\generated-test-sources\apt_
 
 http://ww2.sinaimg.cn/large/7d9d794bgw1e7an3tz2saj20ue060gmi.jpg
 
@@ -114,15 +118,18 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
 
 ==Use 4: How to bind to other maven lifecycle phrase?==
 
-add the executions to maven apt plugin:
+add the *executions* to maven apt plugin:
  
-
-
+{{{
 <plugin>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>apt-maven-plugin</artifactId>
     <version>1.0-alpha-5</version>
-    <configuration>				         <factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>    </configuration>
+    <configuration>				         
+    <factory>
+    com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
+    </factory>    
+    </configuration>
     <executions>
         <execution>
             <phase>test</phase>
@@ -133,5 +140,5 @@ add the executions to maven apt plugin:
         </execution>
     </executions>
 </plugin>
-
+}}}
  
