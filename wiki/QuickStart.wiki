@@ -77,10 +77,9 @@ add option: *excelType=xls*
 {{{
 <configuration>
 <factory>
-com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl?
-</factory>
+com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>
 <options>
-<option>excelType=xls</option>
+    <option>excelType=xls</option>
 </options>
 </configuration>
 }}}
@@ -93,25 +92,21 @@ add option: *excelType=xls*
 {{{
 <configuration>
 <factory>
-com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl?
+com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
 </factory>
 <options>
-<option>fileName=customizedName.xlsx</option>
+    <option>fileName=customizedName.xlsx</option>
 </options>
 </configuration>
 }}}
 
-==Use 2: How to change the excel's output dir instead of using outputdirectory?==
+==Use 2: How to change the excel's output dir instead of using outputdirectory ?==
 
-add configure:outputdirectory:
+add configure: *outputdirectory*:
 {{{
 <configuration>
-<factory>
-com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl?
-</factory>
-<outputdirectory>
-C:\aptDir
-</outputdirectory>
+<factory>com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl</factory>
+<outputdirectory>C:\aptDir</outputdirectory>
 </configuration>
 }}}
 
