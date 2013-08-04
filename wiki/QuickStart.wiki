@@ -27,7 +27,7 @@ add followed two configure parts into pom.xml:
 </plugin>
 }}}
 
-==step 2: use *@TestCase* in your code ==
+==step 2: use `@TestCase` in your code ==
 
 {{{
 public class YourTestCase {
