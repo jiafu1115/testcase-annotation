@@ -14,7 +14,7 @@ add followed two configure parts into pom.xml:
 <dependency>
     <groupid>com.googlecode.testcase-annotation</groupid>
     <artifactid>testcase-annotation</artifactid>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 }}}
 
