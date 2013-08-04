@@ -71,7 +71,7 @@ http://ww2.sinaimg.cn/large/7d9d794bgw1e7an3tz2saj20ue060gmi.jpg
 
 = More use examples=
 
-==Use 1: How to generate office 03xls excel file instend of 07xlsx's?==
+==Use 1: How to generate office 03xls excel file instead of 07xlsx's?==
 
 add option: *excelType=xls*
 {{{
@@ -85,7 +85,7 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl?
 </configuration>
 }}}
 
-==Use 2: How to change the excel's name?==
+==Use 2: How to change the excel's name instead of TestCase_Date.xlsx?==
 
 the excel file's name is TestCase_Date format. if you want to change it, you can:
 
@@ -101,7 +101,7 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl?
 </configuration>
 }}}
 
-==Use 2: How to change the excel's output dir?==
+==Use 2: How to change the excel's output dir instead of using outputdirectory?==
 
 add configure:outputdirectory:
 {{{
