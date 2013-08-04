@@ -148,7 +148,7 @@ and run mvn test can trigger both process and test-process for maven apt
 
 = FAQ =
 
-==Problem 1: java.lang.NoClassDefFoundError: org/apache/poi/ss/formula/udf/IndexedUDFFinder?==
+==Problem 1: `java.lang.NoClassDefFoundError: org/apache/poi/ss/formula/udf/IndexedUDFFinder` ==
 
 the root cause is that:
 
