@@ -54,6 +54,18 @@ public class YourTestCase {
 	
 }
 }}}
+
+==step 3: execute maven command: apt:process or apt:test-process ==
+
+execute: mvn apt:process or apt:test-process
+the goal can refer to :http://mojo.codehaus.org/apt-maven-plugin/plugin-info.html
+
+output excel's dir: it is outputDirectory configure. http://mojo.codehaus.org/apt-maven-plugin/process-mojo.html#outputDirectory
+
+for apt:process, the output dir is target\generated-resources\apt
+for apt:test-process, the output dir is target\generated-test-sources\apt
+
+
 = Details =
 
 Add your content here.  Format your content with:
