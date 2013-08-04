@@ -61,7 +61,7 @@ public class YourTestCase {
 }
 }}}
 
-==step 3: generate excel: execute mvn apt:process or mvn apt:test-process ==
+==step 3: generate excel ==
 
 execute: *mvn apt:process* or *apt:test-process*
 
