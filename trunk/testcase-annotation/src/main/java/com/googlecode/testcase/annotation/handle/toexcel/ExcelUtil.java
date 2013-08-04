@@ -25,12 +25,13 @@ public class ExcelUtil {
 			File fileForFolder = new File(folder);
 			if (!fileForFolder.exists()) {
 				LOGGER.info(String
-						.format("[excel]excel file's folder [%s] hasn't exist, to create it",
+						.format("[excel]excel file's folder [%s] hasn't existed, to create it",
 								folder));
 				fileForFolder.mkdirs();
 			}
 
-			String outputFullPath = folder + "\\" + file;
+			String separator = folder.endsWith(ExcelConstants.FILE_SEPARATOR)?"":ExcelConstants.FILE_SEPARATOR;
+			String outputFullPath = folder +separator + file;
 			LOGGER.info(String.format(
 					"[excel][result][output] excel file path: %s",
 					outputFullPath));
