@@ -7,7 +7,7 @@ to list and track the todo list
 
 = Details =
 
-  * eclipse plugin if need  ___________todo_
+  * eclipse plugin if need  ____________todo_
   * logger(if debugable and format,etc)  ___________doing
   * to generate execl 03/07 or 10  ___________complete
   * path concat: linux/windows, if contain \.  ___________complete
@@ -15,6 +15,8 @@ to list and track the todo list
   * support module/sheet in the test case ___________complete
   * format pom.xml to match central maven requirements ___________complete
   * validation___________todo
+  * add into meta-info service___________todo
+  * how to use it in java apt___________todo
 
  
   
