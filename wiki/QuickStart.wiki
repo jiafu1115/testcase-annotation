@@ -100,7 +100,7 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
 </configuration>
 }}}
 
-==Use 2: How to change the excel's output dir instead of using outputdirectory ?==
+==Use 3: How to change the excel's output dir instead of using outputdirectory ?==
 
 add configure: *outputdirectory*:
 {{{
@@ -111,5 +111,9 @@ com.googlecode.testcase.annotation.AnnotationProcessFactoryImpl
 <outputdirectory>C:\aptDir</outputdirectory>
 </configuration>
 }}}
+
+==Use 4: How to bind to other maven lifecycle phrase?==
+
+
 
  
