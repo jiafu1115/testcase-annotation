@@ -145,4 +145,14 @@ if want to bind to test,add the *executions* to maven apt plugin:
 }}}
 
 and run mvn test can trigger both process and test-process for maven apt
+
+= FAQ =
+
+==Problem 1: java.lang.NoClassDefFoundError: org/apache/poi/ss/formula/udf/IndexedUDFFinder?==
+
+the root cause is that:
+
+the tool use 3.10's poi dependency version, but if your pom.xml had existed lower verison for it which not supported IndexedUDFFinder, it will popup the error.
+
+the solution is to remove the dependency for the lower's version. for jar can use exclude.
  
