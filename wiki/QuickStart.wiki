@@ -69,9 +69,6 @@ for apt:test-process, the output dir is *target\generated-test-sources\apt*
 
 http://ww2.sinaimg.cn/large/7d9d794bgw1e7an3tz2saj20ue060gmi.jpg
 
-= Details =
+= More use examples=
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+==Use 1: How to generate 03xls excel file instend of 07xlsx?==
