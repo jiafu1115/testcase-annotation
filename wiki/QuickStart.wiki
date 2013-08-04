@@ -1,4 +1,4 @@
-We can use this annotation and its' processor tool to use @testcase to write test case for java methods and generate them to one excel.
+We can use @testcase to write test case for java methods and generate them to one excel.
 
 = Requirements =
 
@@ -59,9 +59,9 @@ public class YourTestCase {
 
 execute: *mvn apt:process* or *apt:test-process*
 
-the goal can refer to :http://mojo.codehaus.org/apt-maven-plugin/plugin-info.html
+the goals can refer to :http://mojo.codehaus.org/apt-maven-plugin/plugin-info.html
 
-output excel's dir: it is outputDirectory configure. http://mojo.codehaus.org/apt-maven-plugin/process-mojo.html#outputDirectory
+output excel's dir: it is decided to outputDirectory configure by default: http://mojo.codehaus.org/apt-maven-plugin/process-mojo.html#outputDirectory
 
 for apt:process, the output dir is *target\generated-resources\apt*
 
