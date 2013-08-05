@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.testcase-annotation</groupId>
 	<artifactId>testcase-annotation</artifactId>
-	<version>1.0.6.1</version>
+	<version>1.0.6.3</version>
 	<packaging>jar</packaging>
 	<name>testcase-annotation</name>
 	<description>export test case to excel from annotation by java annotation tool.</description>
@@ -45,15 +45,17 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		<!-- should configure JAVA_HOME environment variable -->
-		<dependency>
+<!--  should configure JAVA_HOME environment variable  -->
+<!--
+ 		<dependency>
 			<groupId>com.sun</groupId>
 			<artifactId>tools</artifactId>
 			<version>1.6.0</version>
 			<scope>system</scope>
 			<systemPath>C:\Program Files (x86)\Java\jdk1.6.0_34\lib\tools.jar</systemPath>
 			<optional>true</optional>
-		</dependency>
+		</dependency> 
+-->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-examples</artifactId>
