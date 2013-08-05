@@ -78,7 +78,7 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 			}
 		}
 
-		toExcelHandle.generateExcelFile();
+		toExcelHandle.generateFile();
 	}
 
 	private ToExcelStrategy getExcelStrategy(String file, String folder) {

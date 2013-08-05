@@ -1,5 +1,6 @@
 package com.googlecode.testcase.annotation.handle.toexcel.strategy;
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -150,10 +151,23 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		return sheetName;
 	}
 
-	public void generateExcelFile() {
+	public void generateFile() {
 		changeSheetNameIfNeed();
-		ExcelUtil.writeExcelFile(folder,file,workbook);
-	}
+		File fileForFolder = new File(folder);
+		if (!fileForFolder.exists()) {
+			LOGGER.info(String
+					.format("[excel]excel file's folder [%s] hasn't existed, to create it",
+							folder));
+			fileForFolder.mkdirs();
+		}
+
+		String separator = folder.endsWith(ExcelConstants.FILE_SEPARATOR)?"":ExcelConstants.FILE_SEPARATOR;
+		String outputFullPathForExcel = folder +separator + file;
+		String outputFullPathForHtml=outputFullPathForExcel.split("\\.")[0]+".html";
+
+ 		ExcelUtil.writeExcelFile(outputFullPathForExcel,workbook);
+		ExcelUtil.convertExcelToHmtl(outputFullPathForExcel,outputFullPathForHtml);
+ 	}
 
 	private void changeSheetNameIfNeed() {
 		int numberOfSheets = workbook.getNumberOfSheets();
