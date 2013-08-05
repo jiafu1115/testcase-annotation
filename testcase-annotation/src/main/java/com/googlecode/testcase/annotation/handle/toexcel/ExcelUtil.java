@@ -19,7 +19,7 @@ public class ExcelUtil {
 
 	public static void convertExcelToHmtl(String outputFullPathForExcel, String outputFullPathForHtml) {
 		try {
-			LOGGER.info(String.format("[excel][result][output] html file path: %s", outputFullPathForHtml));
+			LOGGER.info(String.format("[excel][result][output] html file(with excel content) path: %s", outputFullPathForHtml));
 			ToHtmlWithExcel create = ToHtmlWithExcel.create(outputFullPathForExcel, new FileWriter(
 					outputFullPathForHtml));
 			create.setCompleteHTML(true);
