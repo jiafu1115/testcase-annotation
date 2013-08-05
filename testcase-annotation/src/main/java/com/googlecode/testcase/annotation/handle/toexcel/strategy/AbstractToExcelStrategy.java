@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import com.googlecode.testcase.annotation.handle.toexcel.ExcelConstants;
+import com.googlecode.testcase.annotation.handle.toexcel.ExcelType;
 import com.googlecode.testcase.annotation.handle.toexcel.ExcelUtil;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper;
 import com.googlecode.testcase.annotation.wrapper.TestCaseWrapper.TestCaseWrapperElement;
@@ -163,11 +164,23 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 
 		String separator = folder.endsWith(ExcelConstants.FILE_SEPARATOR)?"":ExcelConstants.FILE_SEPARATOR;
 		String outputFullPathForExcel = folder +separator + file;
-		String outputFullPathForHtml=outputFullPathForExcel.split("\\.")[0]+".html";
+		String outputFullPathForHtml = getOutputFullPathForHtml(outputFullPathForExcel);
 
  		ExcelUtil.writeExcelFile(outputFullPathForExcel,workbook);
 		ExcelUtil.convertExcelToHmtl(outputFullPathForExcel,outputFullPathForHtml);
  	}
+
+	private String getOutputFullPathForHtml(String outputFullPathForExcel) {
+		String outputFullPathForHtmlBeforeExtension;
+		if(outputFullPathForExcel.endsWith(ExcelType.XLS.getExtension())){
+			outputFullPathForHtmlBeforeExtension=outputFullPathForExcel.substring(0, outputFullPathForExcel.length()-ExcelType.XLS.getExtension().length());
+		}else{
+			outputFullPathForHtmlBeforeExtension=outputFullPathForExcel.substring(0, outputFullPathForExcel.length()-ExcelType.XLSX.getExtension().length());
+		}
+		String outputFullPathForHtml=outputFullPathForHtmlBeforeExtension+".html";
+      
+		return outputFullPathForHtml;
+	}
 
 	private void changeSheetNameIfNeed() {
 		int numberOfSheets = workbook.getNumberOfSheets();
