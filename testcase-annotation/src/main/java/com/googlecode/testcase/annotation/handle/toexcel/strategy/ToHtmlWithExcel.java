@@ -251,7 +251,7 @@ public class ToHtmlWithExcel {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new InputStreamReader(
-                    getClass().getResourceAsStream("excelStyle.css")));
+                    getClass().getResourceAsStream("/excelStyle.css")));
             String line;
             while ((line = in.readLine()) != null) {
                 out.format("%s%n", line);
