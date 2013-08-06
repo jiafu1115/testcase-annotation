@@ -7,17 +7,27 @@ to list and track the todo list
 
 = Details =
 
-  * eclipse plugin if need  ++++++++++++todo_
-  * logger improve(if debugable and format,etc)  ++++++++++++doing
-  * to generate execl 03/07 or 10  ++++++++++++complete
-  * path concat: linux/windows, if contain \.  ++++++++++++complete
-  * private static final String DEFAULT_EXCEL_NAME_FORMAT = "TestCase_%s%s"; to use %n date ++++++++++++todo
-  * support module/sheet in the test case ++++++++++++complete
+==1. complete==
+
+  * to generate execl 03/07 or 10   
+  * path concat: linux/windows, if contain \.  
+  * support module/sheet in the test case  
   * format pom.xml to match central maven requirements ++++++++++++complete
-  * parameter validation ++++++++++++todo
-  * add into meta-info service ++++++++++++todo
-  * how to use it in java apt ++++++++++++todo
-  * sort by case id ++++++++++++todo
+  * sort by case id  
+  * support html generated  
+
+==2. doing==
+
+  * logger improve(if debugable and format,etc)  
+
+
+==3. todo==
+  * eclipse plugin if need   
+  * private static final String DEFAULT_EXCEL_NAME_FORMAT = "TestCase_%s%s"; to use %n date  
+  * parameter validation  
+  * add into meta-info service  
+  * how to use it in java apt  
+
 
  
   
