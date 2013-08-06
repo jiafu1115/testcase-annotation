@@ -23,10 +23,11 @@ to list and track the todo list
 
 ==3. todo==
   * eclipse plugin if need   
-  * private static final String DEFAULT_EXCEL_NAME_FORMAT = "TestCase_%s%s"; to use %n date  
+  * private static final String DEFAULT_EXCEL_NAME_FORMAT = "TestCase_%s%s"; to use %n date, and %s%s use some value.  
   * parameter validation  
   * add into meta-info service  
   * how to use it in java apt  
+  * fix the issue:html first module first case title is bold.
 
 
  
