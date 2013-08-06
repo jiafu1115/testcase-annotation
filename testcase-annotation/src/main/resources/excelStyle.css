@@ -41,13 +41,13 @@
 	margin: 0;
 	border-collapse: collapse;
 	white-space: pre;
-	vertical-align: bottom;
+	vertical-align: top;
 	font-style: normal;
 	font-family: sans-serif;
 	font-variant: normal;
 	font-weight: normal;
 	font-size: 10pt;
-	text-align: right;
+	text-align: left;
 }
 
 .excelDefaults td {
@@ -59,7 +59,7 @@
 	background-color: silver;
 	font-weight: bold;
 	border: 1px solid black;
-	text-align: center;
+	text-align: left;
 	padding: 1px 5px;
 }
 
@@ -67,6 +67,6 @@
 	background-color: silver;
 	font-weight: bold;
 	border: 1px solid black;
-	text-align: right;
+	text-align: left;
 	padding: 1px 5px;
 }
