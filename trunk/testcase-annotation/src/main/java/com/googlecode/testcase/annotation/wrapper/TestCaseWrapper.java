@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.googlecode.testcase.annotation.TestCase;
 
-public class TestCaseWrapper {
+public class TestCaseWrapper implements Comparable<TestCaseWrapper>{
 
 	public static enum TestCaseWrapperElement {
 
@@ -63,5 +63,44 @@ public class TestCaseWrapper {
 		return "TestCaseWrapper [testCase=" + testCase + ", methodName="
 				+ methodName + ", moduleName=" + moduleName + "]";
 	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((methodName == null) ? 0 : methodName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TestCaseWrapper other = (TestCaseWrapper) obj;
+		if (methodName == null) {
+			if (other.methodName != null)
+				return false;
+		} else if (!methodName.equals(other.methodName))
+			return false;
+		return true;
+	}
+
+	public int compareTo(TestCaseWrapper o) {
+		if(moduleName.equalsIgnoreCase(o.getModuleName())){
+			if(testCase.id()==o.getTestCase().id()){
+				return 0;
+			}else{
+				return testCase.id()-o.getTestCase().id();
+			}
+		}else
+			return moduleName.compareToIgnoreCase(o.getModuleName());
+ 	}
 
 }

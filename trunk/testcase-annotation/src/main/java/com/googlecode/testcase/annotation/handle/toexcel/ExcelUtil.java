@@ -1,7 +1,6 @@
 package com.googlecode.testcase.annotation.handle.toexcel;
 
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -20,11 +19,9 @@ public class ExcelUtil {
 	public static void convertExcelToHmtl(String outputFullPathForExcel, String outputFullPathForHtml) {
 		try {
 			LOGGER.info(String.format("[excel][result][output] html file(with excel content) path: %s", outputFullPathForHtml));
-			ToHtmlWithExcel create = ToHtmlWithExcel.create(outputFullPathForExcel, new FileWriter(
-					outputFullPathForHtml));
+			ToHtmlWithExcel create = ToHtmlWithExcel.create(outputFullPathForExcel,outputFullPathForHtml);
 			create.setCompleteHTML(true);
-			create.setPrintAllSheets(true);
-			create.printPage();
+ 			create.print();
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}

@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -73,6 +74,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.googlecode.testcase.annotation.handle.toexcel.ExcelConstants;
+
 /**
  * This example shows how to display a spreadsheet in HTML using the classes for
  * spreadsheet display.
@@ -81,14 +84,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ToHtmlWithExcel {
     private final Workbook wb;
-    private final Appendable output;
+    private Appendable output;
     private boolean completeHTML;
     private Formatter out;
     private boolean gotBounds;
     private int firstColumn;
     private int endColumn;
     private HtmlHelper helper;
-    private boolean isPrintAllSheets;
+    private String dstfolder;
+    private String srcFile;
 
 	private static final String DEFAULTS_CLASS = "excelDefaults";
     private static final String COL_HEAD_CLASS = "colHeader";
@@ -120,13 +124,6 @@ public class ToHtmlWithExcel {
         return map;
     }
 
-    public boolean isPrintAllSheets() {
-		return isPrintAllSheets;
-	}
-
-	public void setPrintAllSheets(boolean isPrintAllSheets) {
-		this.isPrintAllSheets = isPrintAllSheets;
-	}
 
     /**
      * Creates a new converter to HTML for the given workbook.
@@ -153,6 +150,16 @@ public class ToHtmlWithExcel {
     public static ToHtmlWithExcel create(String path, Appendable output)
             throws IOException {
         return create(new FileInputStream(path), output);
+    }
+
+    public static ToHtmlWithExcel create(String path, String outputPath)
+            throws IOException {
+           ToHtmlWithExcel toHtmlWithExcel = create(new FileInputStream(path), new FileWriter(outputPath));
+           String[] splitArrays = outputPath.split(Pattern.quote(ExcelConstants.FILE_SEPARATOR));
+           toHtmlWithExcel.dstfolder=outputPath.replace(splitArrays[splitArrays.length-1], "");
+           toHtmlWithExcel.srcFile=path;
+
+           return toHtmlWithExcel;
     }
 
     /**
@@ -199,8 +206,17 @@ public class ToHtmlWithExcel {
         this.completeHTML = completeHTML;
     }
 
-    public void printPage() throws IOException {
-        try {
+    public void print() throws IOException {
+       this.printHomePage();
+
+       int numberOfSheets = wb.getNumberOfSheets();
+       for(int i=0;i<numberOfSheets;i++){
+    	   this.printSheetPage(wb.getSheetAt(i));
+        }
+   }
+
+    public void printHomePage() throws IOException {
+         try {
             ensureOut();
             if (completeHTML) {
                 out.format(
@@ -211,7 +227,14 @@ public class ToHtmlWithExcel {
                 out.format("<body>%n");
             }
 
-            print();
+            out.format("<b>[Case Modules:]</b><br><br>");
+            int numberOfSheets = wb.getNumberOfSheets();
+            for(int i=0;i<numberOfSheets;i++){
+            	out.format("%d     <a href=\"./%s.html\"> %s</a><br>", i+1,wb.getSheetName(i),wb.getSheetName(i));
+            }
+
+        	out.format("<br><br><b>[Download:]</b><br><br><a href=\"./%s\">%s</a><br>", srcFile.replace(dstfolder, ""),"download excel");
+
 
             if (completeHTML) {
                 out.format("</body>%n");
@@ -227,10 +250,37 @@ public class ToHtmlWithExcel {
         }
     }
 
-    public void print() {
-        printInlineStyle();
-        printSheets();
-    }
+    public void printSheetPage(Sheet sheet) throws IOException {
+    	this.output=new FileWriter(dstfolder+sheet.getSheetName()+".html");
+        this.out = new Formatter(output);
+
+        try {
+           ensureOut();
+           if (completeHTML) {
+               out.format(
+                       "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>%n");
+               out.format("<html>%n");
+               out.format("<head>%n");
+               out.format("</head>%n");
+               out.format("<body>%n");
+           }
+
+           printInlineStyle();
+           _printSheetPage(sheet);
+
+           if (completeHTML) {
+               out.format("</body>%n");
+               out.format("</html>%n");
+           }
+       } finally {
+           if (out != null)
+               out.close();
+           if (output instanceof Closeable) {
+               Closeable closeable = (Closeable) output;
+               closeable.close();
+           }
+       }
+   }
 
     private void printInlineStyle() {
         //out.format("<link href=\"excelStyle.css\" rel=\"stylesheet\" type=\"text/css\">%n");
@@ -350,22 +400,8 @@ public class ToHtmlWithExcel {
         return type;
     }
 
-    private void printSheets() {
-        ensureOut();
-        if(isPrintAllSheets){
-        	int numberOfSheets = wb.getNumberOfSheets();
-        	for (int i = 0; i < numberOfSheets; i++) {
-                Sheet sheet = wb.getSheetAt(i);
-                printSheet(sheet);
-			}
-        }else{
-            Sheet sheet = wb.getSheetAt(0);
-            printSheet(sheet);
-        }
 
-    }
-
-    public void printSheet(Sheet sheet) {
+    public void _printSheetPage(Sheet sheet) {
         ensureOut();
         out.format("<table class=%s>%n", DEFAULTS_CLASS);
         printCols(sheet);
@@ -474,9 +510,12 @@ public class ToHtmlWithExcel {
     }
 
     public static void main(String[] args) throws IOException {
- 		ToHtmlWithExcel create = ToHtmlWithExcel.create("D:\\TestCase_2013-08-05_13-04-36.xlsx", new FileWriter("c:\\index.html"));
+	ToHtmlWithExcel create = ToHtmlWithExcel.create("C:\\com.googlecode\\target\\generated-resources\\apt\\TestCase_2013-08-05_21-28-57.xlsx", "C:\\com.googlecode\\target\\generated-resources\\apt\\TestCase_2013-08-05_21-28-57.html" );
 		create.setCompleteHTML(true);
-		create.setPrintAllSheets(true);
-	    create.printPage();
+ 	    create.print();
+
+
+
+
  	}
 }

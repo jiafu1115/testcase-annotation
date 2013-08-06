@@ -1,6 +1,9 @@
 package com.googlecode.testcase.annotation.handle.toexcel.strategy;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -26,15 +29,21 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 	protected String folder;
 	protected String file;
 	protected Workbook workbook;
+	private List<TestCaseWrapper> testCaseWrapperList;
 
 	public AbstractToExcelStrategy(String folder, String file, Workbook workbook) {
 		super();
 		this.folder = folder;
 		this.file = file;
 		this.workbook = workbook;
+		this.testCaseWrapperList=new ArrayList<TestCaseWrapper>();
 	}
 
 	public void add(TestCaseWrapper testCaseWrapper) {
+		testCaseWrapperList.add(testCaseWrapper);
+	}
+
+	private void processTestCaseWrapper(TestCaseWrapper testCaseWrapper) {
 		String title = testCaseWrapper.getTestCase().title();
 		LOGGER.info(String.format("[excel][process][add test case][begin] %s",
 				title));
@@ -46,7 +55,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			LOGGER.debug(String.format("[excel][process][row %d][add]",
 					newRowNum));
 
- 		TestCaseWrapperStringFormatter testCaseWrapperStringFormatter = new TestCaseWrapperStringFormatter(
+		TestCaseWrapperStringFormatter testCaseWrapperStringFormatter = new TestCaseWrapperStringFormatter(
 				testCaseWrapper);
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
 				.toListAsSequence();
@@ -60,13 +69,13 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 
 			CellStyle cellStyleForCaseRow = getCellStyleForCaseRow();
 			cellStyleForCaseRow.setWrapText(testCaseWrapperElement==TestCaseWrapperElement.TITLE);
- 			cellForCase.setCellStyle(cellStyleForCaseRow);
+			cellForCase.setCellStyle(cellStyleForCaseRow);
 
- 			if(testCaseWrapperElement==TestCaseWrapperElement.METHOD){
- 				sheet.autoSizeColumn(i);
- 			}
+			if(testCaseWrapperElement==TestCaseWrapperElement.METHOD){
+				sheet.autoSizeColumn(i);
+			}
 
- 			if (LOGGER.isDebugEnabled())
+			if (LOGGER.isDebugEnabled())
 				LOGGER.debug(String.format(
 						"[excel][process][row %d][cell %d][set] value:%s",
 						newRowNum, i, caseElementValue));
@@ -152,7 +161,16 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		return sheetName;
 	}
 
-	public void generateFile() {
+ 	public void generateFile() {
+ 		Collections.sort(testCaseWrapperList);
+
+ 		Iterator<TestCaseWrapper> iterator = testCaseWrapperList.iterator();
+		while(iterator.hasNext()){
+			TestCaseWrapper next = iterator.next();
+			processTestCaseWrapper(next);
+			iterator.remove();
+ 		}
+
 		changeSheetNameIfNeed();
 		File fileForFolder = new File(folder);
 		if (!fileForFolder.exists()) {
@@ -178,7 +196,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			outputFullPathForHtmlBeforeExtension=outputFullPathForExcel.substring(0, outputFullPathForExcel.length()-ExcelType.XLSX.getExtension().length());
 		}
 		String outputFullPathForHtml=outputFullPathForHtmlBeforeExtension+".html";
-      
+
 		return outputFullPathForHtml;
 	}
 
