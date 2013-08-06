@@ -12,7 +12,7 @@ to list and track the todo list
   * to generate execl 03/07 or 10   
   * path concat: linux/windows, if contain \.  
   * support module/sheet in the test case  
-  * format pom.xml to match central maven requirements ++++++++++++complete
+  * format pom.xml to match central maven requirements 
   * sort by case id  
   * support html generated  
 
