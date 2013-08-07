@@ -362,8 +362,8 @@ public class ToHtmlWithExcel {
         Font font = wb.getFontAt(style.getFontIndex());
 
         if (font.getBoldweight() >= HSSFFont.BOLDWEIGHT_NORMAL)
-            out.format("  font-weight: bold;%n");
-        if (font.getItalic())
+/*            out.format("  font-weight: bold;%n");
+*/      if (font.getItalic())
             out.format("  font-style: italic;%n");
 
         int fontheight = font.getFontHeightInPoints();
