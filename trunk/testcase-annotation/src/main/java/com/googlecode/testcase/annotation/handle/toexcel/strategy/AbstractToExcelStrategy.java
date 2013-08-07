@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -30,6 +29,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 	protected String file;
 	protected Workbook workbook;
 	private List<TestCaseWrapper> testCaseWrapperList;
+	protected CellStyleForTestCaseExcel cellStyleForTestCaseExcel;
 
 	public AbstractToExcelStrategy(String folder, String file, Workbook workbook) {
 		super();
@@ -37,6 +37,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		this.file = file;
 		this.workbook = workbook;
 		this.testCaseWrapperList=new ArrayList<TestCaseWrapper>();
+		this.cellStyleForTestCaseExcel=new CellStyleForTestCaseExcel(workbook);
 	}
 
 	public void add(TestCaseWrapper testCaseWrapper) {
@@ -67,9 +68,8 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			Cell cellForCase = caseRow.createCell(i);
 			cellForCase.setCellValue(caseElementValue);
 
-			CellStyle cellStyleForCaseRow = getCellStyleForCaseRow();
-			cellStyleForCaseRow.setWrapText(testCaseWrapperElement==TestCaseWrapperElement.TITLE);
-			cellForCase.setCellStyle(cellStyleForCaseRow);
+			CellStyle cellStyleForCaseRow = testCaseWrapperElement==TestCaseWrapperElement.TITLE?cellStyleForTestCaseExcel.getCellStyleForOtherRowsWithTextWrap():cellStyleForTestCaseExcel.getCellStyleForOtherRowsWithoutTextWrap();
+ 			cellForCase.setCellStyle(cellStyleForCaseRow);
 
 			if(testCaseWrapperElement==TestCaseWrapperElement.METHOD){
 				sheet.autoSizeColumn(i);
@@ -83,14 +83,6 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 
 		LOGGER.info(String.format("[excel][process][add test case][end] %s",
 				title));
-	}
-
-	private CellStyle getCellStyleForCaseRow() {
-		CellStyle cellStyle = workbook.createCellStyle();
- 		cellStyle.setAlignment(CellStyle.ALIGN_LEFT);
-		cellStyle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-
-		return cellStyle;
 	}
 
 	private Sheet createNewSheetIfNeed(TestCaseWrapper testCaseWrapper) {
@@ -113,8 +105,6 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		LOGGER.info(String.format("[excel][initial][sheet %d][row 0][add]", newSheetNumber));
 		Row firstRow = sheet.createRow(0);
 
-		CellStyle cellStyle = getCellFormatForFirstRow();
-		firstRow.setRowStyle(cellStyle);
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
 				.toListAsSequence();
 		int size = caseElements.size();
@@ -124,7 +114,8 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			Cell cell = firstRow.createCell(i);
 			cell.setCellValue(cellValue);
 
- 			applyCellStyle(sheet, cellStyle, i, testCaseWrapperElement, cell);
+ 			cell.setCellStyle(cellStyleForTestCaseExcel.getCellStyleForFirstRow());
+			sheet.setColumnWidth(i, TestCaseWrapperStringFormatter.getColumnWidth(testCaseWrapperElement));
 
 			if (LOGGER.isDebugEnabled())
 				LOGGER.info(String.format(
@@ -133,25 +124,6 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		}
 
 		return sheet;
-	}
-
-	private void applyCellStyle(Sheet sheet, CellStyle cellStyle, int i,
-			TestCaseWrapperElement testCaseWrapperElement, Cell cell) {
-		cell.setCellStyle(cellStyle);
-		sheet.setColumnWidth(i, TestCaseWrapperStringFormatter.getColumnWidth(testCaseWrapperElement));
-	}
-
-	private CellStyle getCellFormatForFirstRow() {
-		CellStyle cellStyle = this.workbook.createCellStyle();
-        Font font = workbook.createFont();
-        font.setColor(Font.COLOR_RED);
-        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-
-        cellStyle.setFont(font);
-        cellStyle.setFillForegroundColor((short) 13);
-        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        return cellStyle;
 	}
 
 	private String getSheetName(TestCaseWrapper testCaseWrapper) {
