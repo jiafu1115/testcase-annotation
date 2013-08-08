@@ -227,13 +227,13 @@ public class ToHtmlWithExcel {
                 out.format("<body>%n");
             }
 
-            out.format("<b>[Case Modules:]</b><br><br>");
+            out.format("<b>[Case Modules]</b><br><br>");
             int numberOfSheets = wb.getNumberOfSheets();
             for(int i=0;i<numberOfSheets;i++){
             	out.format("%d     <a href=\"./%s.html\"> %s</a><br>", i+1,wb.getSheetName(i),wb.getSheetName(i));
             }
 
-        	out.format("<br><br><b>[Download:]</b><br><br><a href=\"./%s\">%s</a><br>", srcFile.replace(dstfolder, ""),"download excel");
+        	out.format("<br><br><b>[Download]</b><br><br><a href=\"./%s\">%s</a><br>", srcFile.replace(dstfolder, ""),"download excel");
 
 
             if (completeHTML) {
@@ -508,13 +508,6 @@ public class ToHtmlWithExcel {
         }
         return "";
     }
-
-    public static void main(String[] args) throws IOException {
-	ToHtmlWithExcel create = ToHtmlWithExcel.create("C:\\com.googlecode\\target\\generated-resources\\apt\\TestCase_2013-08-05_21-28-57.xlsx", "C:\\com.googlecode\\target\\generated-resources\\apt\\TestCase_2013-08-05_21-28-57.html" );
-		create.setCompleteHTML(true);
- 	    create.print();
-
-
 
 
  	}
