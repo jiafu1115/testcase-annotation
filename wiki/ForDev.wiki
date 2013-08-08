@@ -15,4 +15,4 @@
 
 = Deploy to sonatype=
 
-mvn -X clean deploy -Dgpg.passphrase=fujian
+mvn -X clean deploy -Dgpg.passphrase=password
