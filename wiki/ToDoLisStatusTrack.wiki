@@ -15,6 +15,8 @@ to list and track the todo list
   * format pom.xml to match central maven requirements 
   * sort by case id  
   * support html generated  
+  * fix the issue:html first module first case title is bold.
+
 
 ==2. doing==
 
@@ -27,7 +29,7 @@ to list and track the todo list
   * parameter validation  
   * add into meta-info service  
   * how to use it in java apt  
-  * fix the issue:html first module first case title is bold.
+  * fix the issue: when no case, no html, so use publish html plugin build fail.
 
 
  
