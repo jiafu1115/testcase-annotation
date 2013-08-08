@@ -1,0 +1,18 @@
+#For Devs' self.
+
+= to verify faster, no need to waiting 2 hours to sync with central=
+
+{{{
+<repositories>
+<repository>
+<id>remote</id>
+<name>Maven 2 Repository on dmsqa</name>			<url>https://oss.sonatype.org/service/local/repositories/releases/content/
+</url>
+</repository>
+</repositories>
+}}}
+
+
+= Deploy to sonatype=
+
+mvn -X clean deploy -Dgpg.passphrase=fujian
