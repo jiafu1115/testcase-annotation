@@ -47,7 +47,7 @@ public class CellStyleForTestCaseExcel {
 		cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
 		Font createFont = workbook.createFont();
-		createFont.setBoldweight((short) 600);
+		createFont.setBoldweight((short) 700);
 		cellStyle.setFont(createFont);
 
 		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);
