@@ -48,6 +48,10 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		return testCaseWrapperList;
 	}
 
+	public boolean isThereCase(){
+		return !testCaseWrapperList.isEmpty();
+	}
+
 	private void processTestCaseWrapper(TestCaseWrapper testCaseWrapper) {
 		String title = testCaseWrapper.getTestCase().title();
 		LOGGER.info(String.format("[excel][process][add test case][begin] %s",
