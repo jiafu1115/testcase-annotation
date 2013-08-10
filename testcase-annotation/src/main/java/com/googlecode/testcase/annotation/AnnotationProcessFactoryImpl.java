@@ -28,13 +28,13 @@ public class AnnotationProcessFactoryImpl implements AnnotationProcessorFactory 
 	}
 
 	public Collection<String> supportedAnnotationTypes() {
-		return Collections.unmodifiableCollection(Arrays.asList("com.googlecode.testcase.annotation.TestCase"));
+		return Collections.unmodifiableCollection(Arrays.asList("*"));
 	}
 
 	public AnnotationProcessor getProcessorFor(
 			Set<AnnotationTypeDeclaration> annotationTypeDeclarationSet,
 			AnnotationProcessorEnvironment annotationProcessorEnvironment) {
-		return new TestCaseAnnotationProcessorImpl(
+ 		return new TestCaseAnnotationProcessorImpl(
 				annotationProcessorEnvironment);
 	}
 
