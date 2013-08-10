@@ -38,6 +38,7 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
 		String file = getFileName(options);
 		String folder = options.get("-d");
+		boolean isForceCreateFile=isForceCreateFile(options);
 
 		ToExcelStrategy toExcelHandle = getExcelStrategy(file, folder);
 
@@ -78,7 +79,8 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 			}
 		}
 
-		toExcelHandle.generateFile();
+		if(isForceCreateFile||toExcelHandle.isThereCase())
+			toExcelHandle.generateFile();
 	}
 
 	private ToExcelStrategy getExcelStrategy(String file, String folder) {
@@ -102,6 +104,16 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 		}
 
 		return generateRandomFileName(options);
+	}
+
+	private boolean isForceCreateFile(Map<String, String> options) {
+		String forceCreateFile = getAvalueFromOptions(options,
+				OptionsConstants.FORCE_CREATE_FILE_OPTION);
+		if (forceCreateFile != null) {
+			return Boolean.parseBoolean(forceCreateFile.trim().toLowerCase());
+		}
+
+		return false;
 	}
 
 	private static String generateRandomFileName(Map<String, String> options) {
