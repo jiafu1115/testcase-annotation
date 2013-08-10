@@ -209,10 +209,13 @@ public class ToHtmlWithExcel {
     public void print() throws IOException {
        this.printHomePage();
 
-       int numberOfSheets = wb.getNumberOfSheets();
-       for(int i=0;i<numberOfSheets;i++){
-    	   this.printSheetPage(wb.getSheetAt(i));
-        }
+       if(!isNoAnyCases()){
+           int numberOfSheets = wb.getNumberOfSheets();
+           for(int i=0;i<numberOfSheets;i++){
+        	   this.printSheetPage(wb.getSheetAt(i));
+           }
+       }
+
    }
 
     public void printHomePage() throws IOException {
@@ -227,14 +230,16 @@ public class ToHtmlWithExcel {
                 out.format("<body>%n");
             }
 
-            out.format("<b>[Case Modules]</b><br><br>");
-            int numberOfSheets = wb.getNumberOfSheets();
-            for(int i=0;i<numberOfSheets;i++){
-            	out.format("%d     <a href=\"./%s.html\"> %s</a><br>", i+1,wb.getSheetName(i),wb.getSheetName(i));
+            if(isNoAnyCases()){
+            	out.format("<p><b>no any cases</b></p>");
+             }else{
+                out.format("<b>[Case Modules]</b><br><br>");
+                int numberOfSheets = wb.getNumberOfSheets();
+                for(int i=0;i<numberOfSheets;i++){
+                	out.format("%d     <a href=\"./%s.html\"> %s</a><br>", i+1,wb.getSheetName(i),wb.getSheetName(i));
+                }
+            	out.format("<br><br><b>[Download]</b><br><br><a href=\"./%s\">%s</a><br>", srcFile.replace(dstfolder, ""),"download excel");
             }
-
-        	out.format("<br><br><b>[Download]</b><br><br><a href=\"./%s\">%s</a><br>", srcFile.replace(dstfolder, ""),"download excel");
-
 
             if (completeHTML) {
                 out.format("</body>%n");
@@ -249,6 +254,11 @@ public class ToHtmlWithExcel {
             }
         }
     }
+
+
+	private boolean isNoAnyCases() {
+		return wb.getNumberOfSheets()==1&&wb.getSheetAt(0).getLastRowNum()==0;
+	}
 
     public void printSheetPage(Sheet sheet) throws IOException {
     	this.output=new FileWriter(dstfolder+sheet.getSheetName()+".html");
