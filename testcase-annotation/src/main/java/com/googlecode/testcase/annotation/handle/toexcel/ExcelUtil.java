@@ -31,6 +31,11 @@ public class ExcelUtil {
 		FileOutputStream fileOutputStream = null;
 		try {
 			LOGGER.info(String.format("[excel][result][output] excel file path: %s", outputFullPath));
+ 			
+			if(workbook.getNumberOfSheets()==0){
+				LOGGER.info("[excel][result][output] there is no any cases, should create one sheet to generate readable excel file");
+ 				workbook.createSheet();
+			}
 
 			fileOutputStream = new FileOutputStream(outputFullPath);
 			workbook.write(fileOutputStream);
