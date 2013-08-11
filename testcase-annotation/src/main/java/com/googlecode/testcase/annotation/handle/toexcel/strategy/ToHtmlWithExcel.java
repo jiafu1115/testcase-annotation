@@ -124,34 +124,6 @@ public class ToHtmlWithExcel {
         return map;
     }
 
-
-    /**
-     * Creates a new converter to HTML for the given workbook.
-     *
-     * @param wb     The workbook.
-     * @param output Where the HTML output will be written.
-     *
-     * @return An object for converting the workbook to HTML.
-     */
-    public static ToHtmlWithExcel create(Workbook wb, Appendable output) {
-        return new ToHtmlWithExcel(wb, output);
-    }
-
-    /**
-     * Creates a new converter to HTML for the given workbook.  If the path ends
-     * with "<tt>.xlsx</tt>" an {@link XSSFWorkbook} will be used; otherwise
-     * this will use an {@link HSSFWorkbook}.
-     *
-     * @param path   The file that has the workbook.
-     * @param output Where the HTML output will be written.
-     *
-     * @return An object for converting the workbook to HTML.
-     */
-    public static ToHtmlWithExcel create(String path, Appendable output)
-            throws IOException {
-        return create(new FileInputStream(path), output);
-    }
-
     public static ToHtmlWithExcel create(String path, String outputPath)
             throws IOException {
            ToHtmlWithExcel toHtmlWithExcel = create(new FileInputStream(path), new FileWriter(outputPath));
@@ -172,12 +144,12 @@ public class ToHtmlWithExcel {
      *
      * @return An object for converting the workbook to HTML.
      */
-    public static ToHtmlWithExcel create(InputStream in, Appendable output)
+    private static ToHtmlWithExcel create(InputStream in, Appendable output)
             throws IOException {
         try {
             Workbook wb = WorkbookFactory.create(in);
-            return create(wb, output);
-        } catch (InvalidFormatException e){
+            return new ToHtmlWithExcel(wb, output);
+         } catch (InvalidFormatException e){
             throw new IllegalArgumentException("Cannot create workbook from stream", e);
         }
     }
@@ -471,7 +443,6 @@ public class ToHtmlWithExcel {
         Iterator<Row> rows = sheet.rowIterator();
         while (rows.hasNext()) {
             Row row = rows.next();
-
             out.format("  <tr>%n");
             out.format("    <td class=%s>%d</td>%n", ROW_HEAD_CLASS,
                     row.getRowNum() + 1);
