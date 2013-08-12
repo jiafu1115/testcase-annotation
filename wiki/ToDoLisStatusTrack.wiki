@@ -4,9 +4,6 @@
 
 to list and track the todo list
 
-WikiSyntax
-
-[WikiSyntax#Wiki-style_markup]
 
 = Details =
 
