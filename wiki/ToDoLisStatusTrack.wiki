@@ -4,8 +4,6 @@
 
 to list and track the todo list
 
-[#Introduction]
-
 = Details =
 
 ==1. complete==
