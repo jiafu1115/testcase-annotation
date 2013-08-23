@@ -44,8 +44,10 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
 		for (TypeDeclaration typeDeclaration : annotationProcessorEnvironment
 				.getSpecifiedTypeDeclarations()) {
- 			LOGGER.info(String.format("[processor][discover][type][found]type: %s",
+			if(LOGGER.isDebugEnabled())
+				LOGGER.debug(String.format("[processor][discover][type][found]type: %s",
 					typeDeclaration));
+
 			Collection<? extends MethodDeclaration> methods = typeDeclaration
 					.getMethods();
 			for (MethodDeclaration methodDeclaration : methods) {
