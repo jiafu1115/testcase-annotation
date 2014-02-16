@@ -195,7 +195,7 @@ public class ToHtmlWithExcel {
             ensureOut();
             if (completeHTML) {
                 out.format(
-                        "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>%n");
+                        "<?xml version=\"1.0\" encoding=\"gb2312\" ?>%n");
                 out.format("<html>%n");
                 out.format("<head>%n");
                 out.format("</head>%n");
@@ -240,7 +240,7 @@ public class ToHtmlWithExcel {
            ensureOut();
            if (completeHTML) {
                out.format(
-                       "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>%n");
+                       "<?xml version=\"1.0\" encoding=\"gb2312\" ?>%n");
                out.format("<html>%n");
                out.format("<head>%n");
                out.format("</head>%n");
