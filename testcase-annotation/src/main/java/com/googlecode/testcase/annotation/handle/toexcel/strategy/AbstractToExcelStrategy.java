@@ -54,8 +54,9 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 
 	private void processTestCaseWrapper(TestCaseWrapper testCaseWrapper) {
 		String title = testCaseWrapper.getTestCase().title();
-		LOGGER.info(String.format("[excel][process][add test case][begin] %s",
-				title));
+		if (LOGGER.isDebugEnabled())
+			LOGGER.debug(String.format("[excel][process][add test case][begin] %s",
+					title));
 		Sheet sheet = createNewSheetIfNeed(testCaseWrapper);
 
 		int newRowNum = sheet.getLastRowNum() + 1;
@@ -88,9 +89,9 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 						"[excel][process][row %d][cell %d][set] value:%s",
 						newRowNum, i, caseElementValue));
 		}
-
-		LOGGER.info(String.format("[excel][process][add test case][end] %s",
-				title));
+		if (LOGGER.isDebugEnabled())
+ 			LOGGER.debug(String.format("[excel][process][add test case][end] %s",
+					title));
 	}
 
 	private Sheet createNewSheetIfNeed(TestCaseWrapper testCaseWrapper) {
