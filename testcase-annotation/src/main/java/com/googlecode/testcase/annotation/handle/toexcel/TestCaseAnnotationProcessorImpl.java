@@ -19,6 +19,7 @@ import com.sun.mirror.apt.AnnotationProcessorEnvironment;
 import com.sun.mirror.declaration.MethodDeclaration;
 import com.sun.mirror.declaration.TypeDeclaration;
 
+@SuppressWarnings("restriction")
 public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 
 	private static final Logger LOGGER = Logger
