@@ -34,7 +34,9 @@ public class TestCaseAnnotationProcessorImpl implements AnnotationProcessor {
 	public void process() {
 		Map<String, String> options = this.annotationProcessorEnvironment
 				.getOptions();
-		LOGGER.info(String.format("[processor][info][options map] %s", options));
+ 		
+		if(LOGGER.isDebugEnabled())
+ 			LOGGER.debug(String.format("[processor][info][options map] %s", options));
 
 		String file = getFileName(options);
 		String folder = options.get("-d");
