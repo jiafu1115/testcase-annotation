@@ -1,10 +1,12 @@
 package com.googlecode.testcase.annotation.listeners.testng;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
+import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 
 import com.googlecode.testcase.annotation.TestCase;
@@ -38,10 +40,10 @@ import com.googlecode.testcase.annotation.TestCase;
  * @author jiafu
  *
  */
-public class TestLogListener implements ITestListener {
+public class TestCaseLogListener implements ITestListener {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(TestLogListener.class);
+			.getLogger(TestCaseLogListener.class);
 
 	@Override
     public void onStart(ITestContext arg0) {
@@ -60,7 +62,7 @@ public class TestLogListener implements ITestListener {
   
 	@Override
 	public void onTestFailure(ITestResult arg0) {
-
+ 
 	}
 
 	@Override
@@ -70,32 +72,37 @@ public class TestLogListener implements ITestListener {
 
 	@Override
 	public void onTestStart(ITestResult iTestResult) {
- 		Annotation[] annotations = iTestResult.getMethod().getRealClass()
-				.getAnnotations();
-		for (Annotation annotation : annotations) {
+		
+  		@SuppressWarnings("deprecation")
+		Method method = iTestResult.getMethod().getMethod();
+		Annotation[] annotations = method.getAnnotations();
+ 	 
+		for (Annotation annotation : annotations) {		
+  
 			if (annotation instanceof TestCase) {
-				TestCase testCase = (TestCase) annotation;
+				
+ 				TestCase testCase = (TestCase) annotation;
 				String title = testCase.title();
 				String[] preConditions = testCase.preConditions();
 				String[] steps = testCase.steps();
 				String[] results = testCase.results();
 
-				LOGGER.info("==========================================="+"TestCase:"+iTestResult.getTestName()+"===========================================");
+				LOGGER.info("==========================================="+"TestCase:"+method+"===========================================");
 				LOGGER.info("Case Title: ");
 				LOGGER.info("            " + title);
 				LOGGER.info("Case preConditions: ");
 				for (int i = 0; i < preConditions.length; i++) {
-					LOGGER.info("            " + i + " " + preConditions[i]);
+					LOGGER.info("            " + (i+1) + " " + preConditions[i]);
 				}
 
 				LOGGER.info("Case steps: ");
 				for (int i = 0; i < steps.length; i++) {
-					LOGGER.info("            " + i + " " + steps[i]);
+					LOGGER.info("            " + (i+1) + " " + steps[i]);
 				}
 
 				LOGGER.info("Case results: ");
  				for (int i = 0; i < results.length; i++) {
-					LOGGER.info("            " + i + " " + results[i]);
+					LOGGER.info("            " + (i+1) + " " + results[i]);
 				}
 
 				LOGGER.info("======================================================================================================================");
