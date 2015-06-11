@@ -53,7 +53,14 @@
 			<scope>system</scope>
 			<systemPath>C:/Program Files (x86)/Java/jdk1.6.0_25/lib/tools.jar</systemPath>
 			<optional>true</optional>
-		</dependency> -->
+		</dependency> -->	
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.8.8</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-examples</artifactId>
