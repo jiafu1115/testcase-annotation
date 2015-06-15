@@ -66,7 +66,7 @@ http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.googlecode.testcase-annota
 						</property>
 						<property>
 							<name>listener</name>
-                                        <value>com.googlecode.testcase.annotation.listeners.TestNGCaseLogListener</value>
+                                 <value>com.googlecode.testcase.annotation.listeners.TestNGCaseLogListener</value>
 						</property>
 					</properties>
 
