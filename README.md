@@ -81,6 +81,10 @@ http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.googlecode.testcase-annota
 
 ```
 
+**For Junit**
+config as aboved with followed listener:
+***com.googlecode.testcase.annotation.listeners.JunitTestCaseListener***
+
 ## step 2: use `@TestCase` in your code ##
 
 ```
