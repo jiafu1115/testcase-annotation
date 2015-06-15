@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface TestCase {
 
-  	int id();
+  	int id() default 0;
 	String title();
 	String[] preConditions() default "";
 	String[] steps();
