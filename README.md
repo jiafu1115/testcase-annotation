@@ -54,10 +54,10 @@ http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.googlecode.testcase-annota
 
 					<systemPropertyVariables>
 
-						<file>TestCase.xls</file>
+						<TestCaseFile>TestCase.xls</TestCaseFile>
 						<!-- optional,default is TestCase_{Date}.xlsx,suggest to config it 	to TestCase.xls -->
 
-						<!-- <folder>C:/testcase</folder> -->
+						<!-- <TestCaseFolder>C:/testcase</TestCaseFolder> -->
 						<!-- optional,default is target/classes, -->
 
 						<!-- <forceCreateFile>false</forceCreateFile> -->
@@ -73,7 +73,7 @@ http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.googlecode.testcase-annota
 						</property>
 						<property>
 							<name>listener</name>
-							<value>com.googlecode.testcase.annotation.listeners.TestNGCaseLogListener</value>
+							<value>com.googlecode.testcase.annotation.listeners.TestNGTestCaseListener</value>
 						</property>
 					</properties>
 
@@ -136,9 +136,9 @@ add configure for **maven-compiler-plugin**
                            <version>3.1</version>
                          <configuration>
                            <compilerArgs>
-                           	<!--   <arg>-Afolder=${project.build.directory}</arg>          -->
+                           	<!--   <arg>-ATestCaseFolder=${project.build.directory}</arg>          -->
                                 <!--   <arg>-AforceCreateFile=true</arg>          -->                     		
-                          	<arg>-Afile=TestCase.xls</arg>   
+                          	<arg>-ATestCaseFile=TestCase.xls</arg>   
                            </compilerArgs>
                                   <annotationProcessors>
                                 <annotationProcessor>com.googlecode.testcase.annotation.handle.toexcel.TestCaseAnnotationProcessorImpl</annotationProcessor>
@@ -153,11 +153,11 @@ then run  **mvn compile**
 
 ## Use 2: How to generate office 03xls excel file instead of 07xlsx's? ##
 
-add property: **excelType**
+add property: **TestCaseExcelType**
 ```
 <configuration>
 		<systemPropertyVariables>
-				<excelType>xls</excelType>
+				<TestCaseExcelType>xls</TestCaseExcelType>
 		</systemPropertyVariables>
 </configuration>
 ```
@@ -166,12 +166,12 @@ add property: **excelType**
 
 the excel file's name is `TestCase_Date.xlsx` format. if you want to change it, you can:
 
-add file name with xls extention : **file**
+add file name with xls extention : **TestCaseFile**
 ```
 
 <configuration>
 		<systemPropertyVariables>
-				<file>customized.xls</file>
+				<TestCaseFile>customized.xls</TestCaseFile>
 		</systemPropertyVariables>
 </configuration>
 
@@ -179,11 +179,11 @@ add file name with xls extention : **file**
 
 ## Use 4: How to change the excel's output dir instead of using outputdirectory ? ##
 
-add configure: **folder**:
+add configure: **TestCaseFolder**:
 ```
 <configuration>
 		<systemPropertyVariables>
-				<folder>C:\aptDir</folder>
+				<TestCaseFolder>C:\aptDir</TestCaseFolder>
 		</systemPropertyVariables>
 </configuration>
 ```
@@ -198,7 +198,7 @@ whole configure:
 ```
 <configuration>
 		<systemPropertyVariables>
-				<file>TestCase.xls</file>
+				<TestCaseFile>TestCase.xls</TestCaseFile>
 				<forceCreateFile>true</forceCreateFile>
 		</systemPropertyVariables>
 </configuration>
