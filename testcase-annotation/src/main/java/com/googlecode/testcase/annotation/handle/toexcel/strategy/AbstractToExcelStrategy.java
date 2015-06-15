@@ -28,7 +28,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 	protected String folder;
 	protected String file;
 	protected Workbook workbook;
-	private List<TestCaseWrapper> testCaseWrapperList;
+	protected List<TestCaseWrapper> testCaseWrapperList;
 	protected CellStyleForTestCaseExcel cellStyleForTestCaseExcel;
 
 	public AbstractToExcelStrategy(String folder, String file, Workbook workbook) {
