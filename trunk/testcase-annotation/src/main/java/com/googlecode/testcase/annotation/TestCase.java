@@ -9,11 +9,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface TestCase {
 
-  	int id() default 0;
+	String module() default "";
+ 	String id() default "";
 	String title();
 	String[] preConditions() default "";
 	String[] steps();
 	String[] results();
-	String  module() default "";
 
 }

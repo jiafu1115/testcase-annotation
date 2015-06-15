@@ -36,7 +36,7 @@ public class TestCaseWrapperStringFormatter extends TestCaseWrapperFormatter {
 		TestCase testCase = testCaseWrapper.getTestCase();
   		switch (testCaseWrapperElement) {
 		case ID:
-			return String.valueOf(testCase.id());
+			return String.valueOf(testCase.id().isEmpty()?"N/A":testCase.id());
 		case TITLE:
 			return testCase.title();
 		case PRECONDITIONS:

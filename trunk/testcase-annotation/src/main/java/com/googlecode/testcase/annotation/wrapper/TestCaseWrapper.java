@@ -97,7 +97,7 @@ public class TestCaseWrapper implements Comparable<TestCaseWrapper>{
 			if(testCase.id()==o.getTestCase().id()){
 				return 0;
 			}else{
-				return testCase.id()-o.getTestCase().id();
+				return testCase.id().compareTo(o.getTestCase().id());
 			}
 		}else
 			return moduleName.compareToIgnoreCase(o.getModuleName());
