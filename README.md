@@ -53,9 +53,16 @@ http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.googlecode.testcase-annota
 				<configuration>
 
 					<systemPropertyVariables>
-						<file>TestCase.xls</file>  //optional,default is TestCase_{Date}.xlsx,suggest to config it to TestCase.xls
-					<!--	<folder>C:/testcase</folder> -->//optional,default is target/classes, 
-					<!--	<forceCreateFile>false</forceCreateFile> -->//optional,default:false,if ture, will create testcase file even no any cases found.
+
+						<file>TestCase.xls</file>
+						<!-- optional,default is TestCase_{Date}.xlsx,suggest to config it 	to TestCase.xls -->
+
+						<!-- <folder>C:/testcase</folder> -->
+						<!-- optional,default is target/classes, -->
+
+						<!-- <forceCreateFile>false</forceCreateFile> -->
+						<!-- optional,default:false,if ture, will create testcase file even no any cases found. -->
+ 
 					</systemPropertyVariables>
 
 					<properties>
@@ -66,12 +73,11 @@ http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.googlecode.testcase-annota
 						</property>
 						<property>
 							<name>listener</name>
-                                 <value>com.googlecode.testcase.annotation.listeners.TestNGCaseLogListener</value>
+							<value>com.googlecode.testcase.annotation.listeners.TestNGCaseLogListener</value>
 						</property>
 					</properties>
 
 				</configuration>
-			</plugin>
 
 ```
 
@@ -130,9 +136,9 @@ add configure for **maven-compiler-plugin**
                            <version>3.1</version>
                          <configuration>
                            <compilerArgs>
-                          		<arg>-Afolder=${project.build.directory}</arg>  //optional
-                          		<arg>-Afile=TestCase.xls</arg>  //optional
-                          		<arg>-AforceCreateFile=true</arg> //optional
+                           	<!--   <arg>-Afolder=${project.build.directory}</arg>          -->
+                                <!--   <arg>-AforceCreateFile=true</arg>          -->                     		
+                          	<arg>-Afile=TestCase.xls</arg>   
                            </compilerArgs>
                                   <annotationProcessors>
                                 <annotationProcessor>com.googlecode.testcase.annotation.handle.toexcel.TestCaseAnnotationProcessorImpl</annotationProcessor>
