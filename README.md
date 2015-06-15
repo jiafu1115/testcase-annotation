@@ -153,11 +153,11 @@ then run  **mvn compile**
 
 ## Use 2: How to generate office 03xls excel file instead of 07xlsx's? ##
 
-add property: **excelType=xls**
+add property: **excelType**
 ```
 <configuration>
 		<systemPropertyVariables>
-				<file>TestCase.xls</file>
+				<excelType>xls</excelType>
 		</systemPropertyVariables>
 </configuration>
 ```
