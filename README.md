@@ -53,9 +53,9 @@ http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.googlecode.testcase-annota
 				<configuration>
 
 					<systemPropertyVariables>
-						<file>TestCase.xls</file>  //optional,default is TestCase_{Date}.xlsx
-						<folder>C:/testcase</folder> //optional,default is target/classes
-						<forceCreateFile>false</forceCreateFile> //optional,default:false
+						<file>TestCase.xls</file>  //optional,default is TestCase_{Date}.xlsx,suggest to config it to TestCase.xls
+					<!--	<folder>C:/testcase</folder> -->//optional,default is target/classes, 
+					<!--	<forceCreateFile>false</forceCreateFile> -->//optional,default:false,if ture, will create testcase file even no any cases found.
 					</systemPropertyVariables>
 
 					<properties>
