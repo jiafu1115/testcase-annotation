@@ -111,7 +111,11 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 		int newSheetNumber = workbook.getNumberOfSheets()+1;
 		LOGGER.info(String.format("[excel][initial][sheet %d][add] sheet:%s",newSheetNumber, sheetName));
   		Sheet sheet = workbook.createSheet(sheetName);
-		LOGGER.info(String.format("[excel][initial][sheet %d][row 0][add]", newSheetNumber));
+  		
+		if (LOGGER.isDebugEnabled()){
+			LOGGER.debug(String.format("[excel][initial][sheet %d][row 0][add]", newSheetNumber));
+ 		}
+		
 		Row firstRow = sheet.createRow(0);
 
 		List<TestCaseWrapperElement> caseElements = TestCaseWrapperElement
@@ -127,7 +131,7 @@ public abstract class AbstractToExcelStrategy implements ToExcelStrategy {
 			sheet.setColumnWidth(i, TestCaseWrapperStringFormatter.getColumnWidth(testCaseWrapperElement));
 
 			if (LOGGER.isDebugEnabled())
-				LOGGER.info(String.format(
+				LOGGER.debug(String.format(
 						"[excel][initial][row 0][cell %d][set] value:%s", i,
 						cellValue));
 		}
