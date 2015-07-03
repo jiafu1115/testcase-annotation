@@ -42,8 +42,9 @@ public class TestNGTestCaseListener extends TestCaseListener implements ITestLis
 		Method method = iTestResult.getMethod().getMethod();
   		String methodName = method.toString();
 		TestCase annotation=method.getAnnotation(TestCase.class);;
-  				
-		printAndAddTestCase( methodName, annotation);
+  		
+		if(annotation!=null)
+			printAndAddTestCase( methodName, annotation);
  	}
 
 	
