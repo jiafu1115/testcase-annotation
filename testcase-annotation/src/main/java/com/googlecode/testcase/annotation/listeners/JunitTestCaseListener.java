@@ -16,8 +16,9 @@ public class JunitTestCaseListener extends TestCaseListener{
  	}
 
 	public void testStarted(Description description) throws Exception {
-  		TestCase annotation=description.getAnnotation(TestCase.class);;
- 		printAndAddTestCase( description.getMethodName(), annotation);
+  		TestCase annotation=description.getAnnotation(TestCase.class);
+  		if(annotation!=null)
+  			printAndAddTestCase( description.getMethodName(), annotation);
  	}
 
 	public void testFinished(Description description) throws Exception {
