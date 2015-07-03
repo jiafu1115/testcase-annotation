@@ -51,6 +51,7 @@ public class TestNGTestCaseListener extends TestCaseListener implements ITestLis
 
 	@Override
 	public void onTestSuccess(ITestResult arg0) {
+		
  	}
 
 }
